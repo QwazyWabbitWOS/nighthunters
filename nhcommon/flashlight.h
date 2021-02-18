@@ -22,6 +22,7 @@ void onPlayerConnect (edict_t *ent);
 void EndDMLevel (void);
 void InfoComputer (edict_t *ent);
 void Cmd_ShowInfo_f (edict_t *ent);
+void playerEffects(edict_t* player);
 
 int nextdynamicset;
 

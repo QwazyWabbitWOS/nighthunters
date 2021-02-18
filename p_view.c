@@ -1031,7 +1031,7 @@ void ClientEndServerFrame (edict_t *ent)
 	float	bobtime;
 	int		i;
 
-	char count[1024] ;
+	//char count[1024] ;
 
 	current_player = ent;
 	current_client = ent->client;
@@ -1084,7 +1084,7 @@ void ClientEndServerFrame (edict_t *ent)
 	// calculate speed and cycle to be used for
 	// all cyclic walking effects
 	//
-	xyspeed = sqrt(ent->velocity[0]*ent->velocity[0] + ent->velocity[1]*ent->velocity[1]);
+	xyspeed = sqrtf(ent->velocity[0] * ent->velocity[0] + ent->velocity[1] * ent->velocity[1]);
 
 	if (xyspeed < 5)
 	{

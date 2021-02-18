@@ -9,6 +9,8 @@
 //============================================================================
 
 #include "g_local.h"
+#include "g_IRgoggles.h"
+#include "g_cmd_observe.h"
 
 void CTFChaseCam(edict_t *ent)
 {
@@ -132,7 +134,7 @@ static edict_t *loc_findradius (edict_t *from, vec3_t org, float rad)
 #endif
       for (j=0 ; j<3 ; j++)
 	eorg[j] = org[j] - (from->s.origin[j] +
-			    (from->mins[j] + from->maxs[j])*0.5);
+			    (from->mins[j] + from->maxs[j])*0.5f);
       if (VectorLength(eorg) > rad)
 	continue;
       return from;
@@ -200,7 +202,7 @@ static void CTFSay_Team_Location(edict_t *who, char *buf)
   int i;
   gitem_t *item;
   int nearteam = -1;
-  edict_t *flag1, *flag2;
+  //edict_t *flag1, *flag2; //QW// Unused.
   qboolean hotsee = false;
   qboolean cansee;
   

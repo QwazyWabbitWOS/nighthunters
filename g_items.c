@@ -100,32 +100,72 @@ gitem_t	*FindItem (char *pickup_name)
 
 //======================================================================
 
-void DoRespawn (edict_t *ent)
+void DoRespawn(edict_t* ent)
 {
-	if (ent->team)
+	if (ent == NULL)
 	{
-		edict_t	*master;
-		int	count;
-		int choice;
-
-		master = ent->teammaster;
-
-		for (count = 0, ent = master; ent; ent = ent->chain, count++)
-			;
-
-		choice = rand() % count;
-
-		for (count = 0, ent = master; count < choice; ent = ent->chain, count++)
-			;
+		gi.dprintf("WARNING: NULL ent passed to %s\n", __func__);
+		return;
 	}
 
-	ent->svflags &= ~SVF_NOCLIENT;
-	ent->solid = SOLID_TRIGGER;
-	gi.linkentity (ent);
+	if (ent->team)
+	{
+		edict_t* master;
+		unsigned count;
+		unsigned choice;
 
-	// send an effect
-	ent->s.event = EV_ITEM_RESPAWN;
+		master = ent->teammaster;
+		if (master == NULL)
+			return;
+
+			count = 0;
+			for (ent = master; ent; ent = ent->chain)
+				count++;
+
+			choice = count ? rand() % count : 0;
+
+			count = 0;
+			for (ent = master; count < choice; ent = ent->chain)
+				count++;
+	}
+
+	if (ent)
+	{
+		ent->svflags &= ~SVF_NOCLIENT;
+		ent->solid = SOLID_TRIGGER;
+		gi.linkentity(ent);
+
+		// send an effect
+		ent->s.event = EV_ITEM_RESPAWN;
+	}
 }
+
+//void DoRespawn (edict_t *ent)
+//{
+//	if (ent->team)
+//	{
+//		edict_t	*master;
+//		int	count;
+//		int choice;
+//
+//		master = ent->teammaster;
+//
+//		for (count = 0, ent = master; ent; ent = ent->chain, count++)
+//			;
+//
+//		choice = rand() % count;
+//
+//		for (count = 0, ent = master; count < choice; ent = ent->chain, count++)
+//			;
+//	}
+//
+//	ent->svflags &= ~SVF_NOCLIENT;
+//	ent->solid = SOLID_TRIGGER;
+//	gi.linkentity (ent);
+//
+//	// send an effect
+//	ent->s.event = EV_ITEM_RESPAWN;
+//}
 
 void SetRespawn (edict_t *ent, float delay)
 {
@@ -1156,7 +1196,7 @@ void PrecacheItem (gitem_t *it)
 			s++;
 
 		len = s-start;
-		if (len >= MAX_QPATH || len < 5)
+		if (len >= MAX_QPATH - 1 || len < 5)
 			gi.error ("PrecacheItem: %s has bad precache string", it->classname);
 		memcpy (data, start, len);
 		data[len] = 0;

@@ -228,7 +228,7 @@
     <ClCompile Include="q_shared.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="strsep\strsep.c">
+    <ClCompile Include="strsep.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -380,7 +380,10 @@
     <ClInclude Include="q_shared.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="strsep\strsep.h">
+    <ClInclude Include="strsep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_ctf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

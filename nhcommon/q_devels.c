@@ -130,7 +130,8 @@ edict_t *random_player (edict_t *notme)
 	}
 	
 	// select a random player
-	random_player = rand() % count;
+	random_player = count ? rand() % count : 0; //QW//
+//	random_player = rand() % count;
 
 	// find the randomly selected player
 	count = 0;
@@ -144,7 +145,8 @@ edict_t *random_player (edict_t *notme)
 				count++;
 		}
 	}
-} 
+	return joe_bloggs;
+}
 
 
 // 7. Item lists by smith57@airmail.net

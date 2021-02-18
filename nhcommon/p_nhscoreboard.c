@@ -44,7 +44,7 @@ void NHScoreboardMessage (edict_t *ent, edict_t *killer)
   int             x, y;
   gclient_t       *cl;
   edict_t         *cl_ent;
-  char    *tag;
+  //char    *tag; //QW// Unused.
 
   char status[20] ; // Status of players.
 

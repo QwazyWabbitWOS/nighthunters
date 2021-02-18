@@ -612,7 +612,7 @@ void TossClientWeapon (edict_t *self)
 		drop->spawnflags |= DROPPED_PLAYER_ITEM;
 
 		drop->touch = Touch_Item;
-		drop->nextthink = level.time + (self->client->quad_framenum - level.framenum) * FRAMETIME;
+		drop->nextthink = level.time + (self->client->quad_framenum - level.time) * FRAMETIME;
 		drop->think = G_FreeEdict;
 	}
 }
@@ -666,7 +666,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 {
 	int		n;
 
-	char msg[100] ; // ***** NH changes.
+	//char msg[100] ; // ***** NH changes. //QW// Unused.
 
 	// If waiting to be pred, doesn't matter that player just melted in the lava..
 	if(self->inWaiting)
@@ -1746,7 +1746,7 @@ The game can override any of the settings in place
 void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 {
 	char	*s;
-	int		playernum;
+	//int		playernum; //QW// Unused.
 
 	// check for malformed or illegal info strings
 	if (!Info_Validate(userinfo))

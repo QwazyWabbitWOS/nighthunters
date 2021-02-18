@@ -280,8 +280,8 @@ void EndDMLevel (void)
   edict_t		*ent;
   edict_t *e2; // ***** NH Change *****
   int i,j=0,lastsize=1; // ***** NH Change *****
-  char *s, *t, *f, *temp;
-  char lastmap[64];
+  char *s = NULL, *t, *f, *temp;
+  char lastmap[64] = { 0 };
   static const char *seps = " ,\n\r";
 
   // Toggle to different intermission beat wav file

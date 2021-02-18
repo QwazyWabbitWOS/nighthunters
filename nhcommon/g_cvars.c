@@ -54,7 +54,7 @@ void validatePenalty() {
 
 }
 
-int getPenalty() {
+int getPenalty(void) {
 
   if (penalty_threshold->modified) 
     validatePenalty() ;
@@ -105,7 +105,7 @@ void validateMaplistSmallMax() {
     gi.cvar_set("sv_maplist_small_max", MAPLIST_SMALL_MAX_DEFAULT );
 }
 
-int getMaplistSmallMax() {
+int getMaplistSmallMax(void) {
 
   // Check if the cvar has changed.
   if (sv_maplist_small_max->modified)

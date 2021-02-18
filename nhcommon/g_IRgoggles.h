@@ -1,3 +1,4 @@
+#pragma once
 //===========================================================================
 // g_IRgoggles.h
 //
@@ -10,26 +11,28 @@
 //===========================================================================
 
 #define IR_R 0
-#define IR_G .5
+#define IR_G 0.5f
 #define IR_B 0
-#define IR_A 0.08
+#define IR_A 0.08f
 #define IR_MARINE_FOV_DEFAULT "75"
 #define IR_EFFECT_TIME_DEFAULT "30"
 
-void Use_IRgoggles(edict_t *ent, gitem_t *item) ;
+void Use_IRgoggles(edict_t* ent, gitem_t* item);
 
-void enable_IRgoggles() ;
-void enable_Quad() ;
+void enable_IRgoggles(void);
+void enable_Quad(void);
 
-void G_SetIREffects(edict_t *ent) ;
+void G_SetIREffects(edict_t* ent);
 
-void deadDropIRgoggles(edict_t *self) ;
+void deadDropIRgoggles(edict_t* self);
+
+void validateIRMarineFOV(void);
+int getIRMarineFOV(void);
+void validateIREffectTime(void);
+int getIREffectTime(void);
 
 // Temporary hack for IR goggle drop.
 // We need to know whether the player was carring the quad or the invuln
 // Once we get a proper model for IR goggles, it won't matter.
-gitem_t *IR_type_dropped ;
-
-
-
+gitem_t* IR_type_dropped;
 

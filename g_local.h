@@ -29,6 +29,8 @@
 #define	NHVER "1.51" //	Also set this in the p_nhmenu.c file!
 //***** NH changes *****
 
+#include "strsep.h"
+
 // the "gameversion" client command will print this plus compile date
 #define	GAMEVERSION	"baseq2"
 
@@ -43,8 +45,8 @@
 //==================================================================
 
 // view pitching times
-#define DAMAGE_TIME		0.5
-#define	FALL_TIME		0.3
+#define DAMAGE_TIME		0.5f
+#define	FALL_TIME		0.3f
 
 
 // edict->spawnflags
@@ -72,7 +74,7 @@
 #define FL_RESPAWN				0x80000000	// used for item respawning
 
 
-#define	FRAMETIME		0.1
+#define	FRAMETIME		0.1f
 
 // memory tags to allow dynamic memory to be cleaned up
 #define	TAG_GAME	765		// clear when unloading the dll
@@ -531,13 +533,14 @@ extern	int	body_armor_index;
 
 extern	int	meansOfDeath;
 
+#define q_offsetof(t, m)	((size_t)&((t *)0)->m)
 
-extern	edict_t			*g_edicts;
+extern	edict_t* g_edicts;
 
-#define	FOFS(x) (int)&(((edict_t *)0)->x)
-#define	STOFS(x) (int)&(((spawn_temp_t *)0)->x)
-#define	LLOFS(x) (int)&(((level_locals_t *)0)->x)
-#define	CLOFS(x) (int)&(((gclient_t *)0)->x)
+#define FOFS(x)		q_offsetof(edict_t, x)
+#define STOFS(x)	q_offsetof(spawn_temp_t, x)
+#define	LLOFS(x)	q_offsetof(level_locals_t, x)
+#define	CLOFS(x)	q_offsetof(gclient_t, x)
 
 #define random()	((rand () & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
@@ -719,6 +722,7 @@ typedef struct
 extern	field_t fields[];
 extern	gitem_t	itemlist[];
 
+#include "g_ctf.h"
 
 //
 // g_cmds.c
@@ -939,6 +943,10 @@ void ChaseNext(edict_t *ent);
 void ChasePrev(edict_t *ent);
 void GetChaseTarget(edict_t *ent);
 
+//
+// p_client.c
+//
+void	SelectSpawnPoint(edict_t* ent, vec3_t origin, vec3_t angles);
 //============================================================================
 
 // client_t->anim_priority

@@ -207,7 +207,7 @@ void deadDropIRgoggles(edict_t *self)
 
 }
 
-void validateIRMarineFOV() {
+void validateIRMarineFOV(void) {
 
   // IR_marine_fov must be between 45 and 120
   if ((IR_marine_fov->value < 45) ||
@@ -215,7 +215,7 @@ void validateIRMarineFOV() {
     gi.cvar_set("IR_marine_fov", IR_MARINE_FOV_DEFAULT );
 }
 
-int getIRMarineFOV() {
+int getIRMarineFOV(void) {
 
   // Check if the cvar has changed.
   if (IR_marine_fov->modified)
@@ -224,7 +224,7 @@ int getIRMarineFOV() {
   return IR_marine_fov->value ;
 }
 
-void validateIREffectTime() {
+void validateIREffectTime(void) {
 
   // IR_effect_time must be between 0 and 120
   if ((IR_effect_time->value < 0) ||
@@ -232,7 +232,7 @@ void validateIREffectTime() {
     gi.cvar_set("IR_effect_time", IR_EFFECT_TIME_DEFAULT );
 }
 
-int getIREffectTime() {
+int getIREffectTime(void) {
 
   // Check if the cvar has changed.
   if (IR_effect_time->modified)

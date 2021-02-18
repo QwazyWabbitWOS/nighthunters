@@ -170,8 +170,7 @@ void setMarineSkin(edict_t *ent, char *skin) {
 qboolean parseSkin(char *fullSkin, char *model, char *skin) {
 
   char *tmp ;  
-  size_t ind ;
-  int i, j=0;
+  //size_t ind ; //QW// Unused.
   
 
   // Initialize

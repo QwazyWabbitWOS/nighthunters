@@ -30,3 +30,6 @@ int getMinScore() ;
 
 void validateMaplistMediumMax();
 int getMaplistMediumMax();
+
+int getMaplistSmallMax(void);
+int getPenalty(void);

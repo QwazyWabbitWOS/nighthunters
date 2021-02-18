@@ -10,6 +10,7 @@
 #include "g_cmd_misc.h" // NH change: Miscellaneous commands.
 #include "g_cmd_overload.h" // NH change: Predator weapon overload toggle.
 #include "g_cmd_spotrep.h" // NH change: Spot report command.
+#include "g_cmd_setup.h"
 //***** End of NH changes ***** 
 
 
@@ -949,7 +950,7 @@ ClientCommand
 void ClientCommand (edict_t *ent)
 {
 	char	*cmd;
-	char  *value ;
+//	char  *value ;
 
 	if (!ent->client)
 		return;		// not fully in game yet

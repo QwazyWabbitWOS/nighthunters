@@ -2,23 +2,25 @@
 // q_shared.h -- included first by ALL program modules
 
 #ifdef _WIN32
-// unknown pragmas are SUPPOSED to be ignored, but....
-#pragma warning(disable : 4244)     // MIPS
-#pragma warning(disable : 4136)     // X86
-#pragma warning(disable : 4051)     // ALPHA
-
-#pragma warning(disable : 4018)     // signed/unsigned mismatch
+#pragma warning(disable : 4244)	// C4244 conversion from 'type1' to 'type2', possible loss of data
+#pragma warning(disable : 4100)	// C4100 unreferenced formal parameter
+#if _MSC_VER > 1500
+#pragma warning(disable : 4996)	// disable warnings from VS 2010 about deprecated CRT functions (_CRT_SECURE_NO_WARNINGS).
 #pragma warning(disable : 4305)		// truncation from const double to float
-
-#endif
+#endif /*_MSC_VER */
+#endif /* _WIN32 */
 
 #include <assert.h>
+#include <float.h>
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
+#include <errno.h>
 
 #if (defined _M_IX86 || defined __i386__) && !defined C_ONLY && !defined __sun__
 #define id386	1
