@@ -73,21 +73,75 @@ SV_RunThink
 Runs thinking code for this frame if necessary
 =============
 */
-qboolean SV_RunThink (edict_t *ent)
+//qboolean SV_RunThink (edict_t *ent)
+//{
+//	float	thinktime;
+//
+//	thinktime = ent->nextthink;
+//	if (thinktime <= 0)
+//		return true;
+//	if (thinktime > level.time+0.001)
+//		return true;
+//	
+//	ent->nextthink = 0;
+//	if (!ent->think)
+//		gi.error ("NULL ent->think");
+//	ent->think (ent);
+//
+//	return false;
+//}
+
+static void
+restartServer(void)
+{
+	char command[80];
+
+	strcpy(command, "gamemap ");
+	strcat(command, defaultmap);
+	gi.AddCommandString(command);
+	return;
+}
+
+qboolean SV_RunThink(edict_t* ent)
 {
 	float	thinktime;
 
 	thinktime = ent->nextthink;
 	if (thinktime <= 0)
 		return true;
-	if (thinktime > level.time+0.001)
+	if (thinktime > level.time + 0.001)
 		return true;
-	
-	ent->nextthink = 0;
-	if (!ent->think)
-		gi.error ("NULL ent->think");
-	ent->think (ent);
 
+	ent->nextthink = 0;
+
+	//QW// report if we're asked to think about bad ents
+	if (ent->think == NULL || !strcmp(ent->classname, "freed"))
+	{
+		if (ent->classname && ent->model)
+			gi.dprintf("%s NULL ent->think (classname %s, model %s mapname %s)\n",
+				__func__, ent->classname, ent->model, level.mapname);
+		else if (ent->classname)
+			gi.dprintf("%s NULL ent->think (classname %s mapname %s)\n",
+				__func__, ent->classname, level.mapname);
+		else
+			gi.dprintf("NULL ent->think (mapname %s)\n",
+				__func__, level.mapname);
+		return false;
+	}
+
+	if (strcmp(ent->classname, "freed") == 0)
+	{
+		//restart server instead of crashing it !
+		if (strstr("target_changelevel", ent->classname))
+		{
+			gi.dprintf("GAME: Server would have crashed due to bad map\n");
+			restartServer();
+			return false;
+		}
+		return false;
+	}
+
+	ent->think(ent);
 	return false;
 }
 
@@ -389,6 +443,12 @@ qboolean SV_Push (edict_t *pusher, vec3_t move, vec3_t amove)
 	pushed_t	*p;
 	vec3_t		org, org2, move2, forward, right, up;
 
+	if (!pusher)
+	{
+		gi.dprintf("NULL pusher passed to %s", __func__);
+		return false;
+	}
+
 	// clamp the move to 1/8 units, so the position will
 	// be accurate for client side prediction
 	for (i=0 ; i<3 ; i++)
@@ -458,7 +518,8 @@ qboolean SV_Push (edict_t *pusher, vec3_t move, vec3_t amove)
 				continue;
 		}
 
-		if ((pusher->movetype == MOVETYPE_PUSH) || (check->groundentity == pusher))
+		if ((pusher->movetype == MOVETYPE_PUSH) || 
+			(check->groundentity == pusher))
 		{
 			// move this entity
 			pushed_p->ent = check;
@@ -865,7 +926,7 @@ void SV_Physics_Step (edict_t *ent)
 			if (!(ent->health <= 0.0 && !M_CheckBottom(ent)))
 			{
 				vel = ent->velocity;
-				speed = sqrt(vel[0]*vel[0] +vel[1]*vel[1]);
+				speed = sqrtf(vel[0]*vel[0] +vel[1]*vel[1]);
 				if (speed)
 				{
 					friction = sv_friction;

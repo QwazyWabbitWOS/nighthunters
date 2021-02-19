@@ -202,20 +202,19 @@ in when somone first connects.
 void onPlayerConnect (edict_t *newplayer)
 {
 		FILE *motd_file;
-		char motd[500];
-		char line[80];
+		char motd[500] = { 0 };
+		char line[80] = { 0 };
 
 	if (motd_file = fopen("nhunters/motd.txt", "r"))
 	{
 		// we successfully opened the file "motd.txt"
-		if ( fgets(motd, 500, motd_file) )		{
+		if ( fgets(motd, sizeof motd - 1, motd_file) )		{
 			// we successfully read a line from "motd.txt" into motd
 			// ... read the remaining lines now
-			while ( fgets(line, 80, motd_file) )
+			while ( fgets(line, sizeof line, motd_file) )
 			{
 			// add each new line to motd, to create a BIG message string.
-			// we are using strcat: STRing conCATenation function here.
-				strcat(motd, line);
+				strncat(motd, line, sizeof motd - 1);
 			}
 			// print our message.
 			gi.centerprintf (newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n- - - - - - - - - - - - - -\n%s", NHVER, motd);

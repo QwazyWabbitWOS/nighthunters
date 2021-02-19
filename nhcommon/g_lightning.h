@@ -10,9 +10,9 @@
 
 #define LIGHT_SHOW_INTERVAL_DEFAULT "60"
 
-void validateLightShowInterval() ;
-int getLightShowInterval() ;
+void validateLightShowInterval();
+int getLightShowInterval();
 
 void Set_Lightning_Effect(int);
-void Lightning_On(void) ;
-void Lightning_Off(void) ;
+void Lightning_On(void);
+void Lightning_Off(void);

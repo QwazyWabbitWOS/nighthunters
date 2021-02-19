@@ -20,7 +20,7 @@ int nhrand(int low, int high) {
 
   srand((unsigned int) time(NULL)) ;
 
-  tmp = range * rand()/(RAND_MAX + 1.0) ;
+  tmp = range * rand()/(RAND_MAX + 1.0f) ;
   result = low + (int) tmp ; 
 
   return result ;

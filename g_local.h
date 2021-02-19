@@ -724,6 +724,8 @@ extern	gitem_t	itemlist[];
 
 #include "g_ctf.h"
 
+char defaultmap[MAX_QPATH];
+
 //
 // g_cmds.c
 //

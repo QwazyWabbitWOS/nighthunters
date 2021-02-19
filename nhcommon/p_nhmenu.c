@@ -30,7 +30,6 @@ void ReturnToNHMainMenu(edict_t* ent, pmenu_t* p);
 void CloseNHMenu(edict_t* ent, pmenu_t* p);
 void EnterGame(edict_t* ent);
 void ObserveGame(edict_t* ent, pmenu_t* p);
-void ChaseCam(edict_t* ent, pmenu_t* p);
 void SetupBindings(edict_t* ent, pmenu_t* p);
 
 void spectator_respawn(edict_t* ent); //QW// FIXME: defined in p+client.c
@@ -162,9 +161,9 @@ pmenu_t NHHelpMenu5[] = {
   { "bindings shown on page 3", PMENU_ALIGN_CENTER, NULL, NULL},
   { "*OR", PMENU_ALIGN_CENTER, NULL, NULL},
   { "choose SET BINDINGS", PMENU_ALIGN_CENTER, NULL, NULL},
-  { "below", PMENU_ALIGN_CENTER, NULL, NULL},   
-  { "*OR", PMENU_ALIGN_CENTER, NULL, NULL},   
-  { "bind them yourself by hand", PMENU_ALIGN_CENTER, NULL, NULL},   
+  { "below", PMENU_ALIGN_CENTER, NULL, NULL},
+  { "*OR", PMENU_ALIGN_CENTER, NULL, NULL},
+  { "bind them yourself by hand", PMENU_ALIGN_CENTER, NULL, NULL},
   { NULL, PMENU_ALIGN_CENTER, NULL, NULL } ,
   { "*To join the game", PMENU_ALIGN_CENTER, NULL, NULL},
   { "*press your FLASHLIGHT key!!!", PMENU_ALIGN_CENTER, NULL, NULL},
@@ -174,7 +173,7 @@ pmenu_t NHHelpMenu5[] = {
   { NULL, PMENU_ALIGN_CENTER, NULL, NULL } ,
   { "SET BINDINGS", PMENU_ALIGN_CENTER, NULL, SetupBindings },
 };
-                                  
+
 
 
 pmenu_t NHAdminMenu[] = {
@@ -229,298 +228,298 @@ pmenu_t NHCreditsMenu2[] = {
 
 
 // Show the NH menu.
-void ShowNHMenu (edict_t *ent)
+void ShowNHMenu(edict_t* ent)
 {
 
-  if (ent->client->menu) {		//is menu opened already?  If so, close
-    PMenu_Close(ent);
-    return;
-  } 		
-
-  //Moved from the p_menu.c code for NH.  If menu open, close instead
-  if (ent->client->showinventory)
-    ent->client->showinventory = false;	//close inventory before opening menu
-
-  PMenu_Close(ent);
-
-  PMenu_Open(ent, NHMenu, -1, sizeof(NHMenu) / sizeof(pmenu_t));
-
-  //  gi.sound(ent, CHAN_VOICE, 
-  //   gi.soundindex("misc/pc_up.wav"), 1, ATTN_STATIC, 0) ;
-} 
-
-void ShowNHInfoMenu(edict_t *ent, pmenu_t *p)
-{
-
-  char motd[500];
-  char line[80];
-  int i=0;
-  FILE *motd_file;
-
-  if (motd_file = fopen("nhunters/info.txt", "r"))
-  {
-    // we successfully opened the file "motd.txt"
-    if ( fgets(motd, 500, motd_file) )              
-        {
-	  // we successfully read a line from "motd.txt" into motd
-	  // ... read the remaining lines now
-	  while (( fgets(line, 80, motd_file) ) && (i <20))
-	    {
-	      // add each new line to motd, to create a BIG message string.
-	      // we are using strcat: STRing conCATenation function here.
-	      strcpy(infotext[i],line);
-	      NHInfoMenu[i].text=infotext[i];
-	      NHInfoMenu[i].align=PMENU_ALIGN_CENTER;
-	      NHInfoMenu[i].arg=NULL;
-	      NHInfoMenu[i].SelectFunc=NULL;
-	      i++; 
-	    }
-	  
+	if (ent->client->menu) {		//is menu opened already?  If so, close
+		PMenu_Close(ent);
+		return;
 	}
-    // be good now ! ... close the file
-    fclose(motd_file);
-  }
-  else
-    {
-      // can't find motd.txt file, so fill with null..
-      i=0;
-      while (i <= 20)
-  	{
-	  NHInfoMenu[i].text=NULL;
-	  NHInfoMenu[i].align=PMENU_ALIGN_CENTER;
-	  NHInfoMenu[i].arg=NULL;
-	  NHInfoMenu[i].SelectFunc=NULL;
-	  i++; 
+
+	//Moved from the p_menu.c code for NH.  If menu open, close instead
+	if (ent->client->showinventory)
+		ent->client->showinventory = false;	//close inventory before opening menu
+
+	PMenu_Close(ent);
+
+	PMenu_Open(ent, NHMenu, -1, sizeof(NHMenu) / sizeof(pmenu_t));
+
+	//  gi.sound(ent, CHAN_VOICE, 
+	//   gi.soundindex("misc/pc_up.wav"), 1, ATTN_STATIC, 0) ;
+}
+
+void ShowNHInfoMenu(edict_t* ent, pmenu_t* p)
+{
+
+	char motd[500] = { 0 };
+	char line[80] = { 0 };
+	int i = 0;
+	FILE* motd_file;
+
+	if (motd_file = fopen("nhunters/info.txt", "r"))
+	{
+		// we successfully opened the file "motd.txt"
+		if (fgets(motd, 500, motd_file))
+		{
+			// we successfully read a line from "motd.txt" into motd
+			// ... read the remaining lines now
+			while ((fgets(line, 80, motd_file)) && (i < 20))
+			{
+				// add each new line to motd, to create a BIG message string.
+				strcpy(infotext[i], line);
+				NHInfoMenu[i].text = infotext[i];
+				NHInfoMenu[i].align = PMENU_ALIGN_CENTER;
+				NHInfoMenu[i].arg = NULL;
+				NHInfoMenu[i].SelectFunc = NULL;
+				i++;
+			}
+
+		}
+		// be good now ! ... close the file
+		fclose(motd_file);
 	}
-      i=1;
-    }
-  //if the file wasn't there, we just make up our own motd
-  //else
-  //	gi.centerprintf (newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n", NHVER);
-  
-  strcpy(infotext[i],"Back");
-  
-  NHInfoMenu[i].text=infotext[i];
-  NHInfoMenu[i].align=PMENU_ALIGN_CENTER;
-  NHInfoMenu[i].arg=NULL;
-  NHInfoMenu[i].SelectFunc=ReturnToNHMainMenu;
-  i++; 
-  
-  PMenu_Close(ent);
-  
-  PMenu_Open(ent, NHInfoMenu, -1, sizeof(NHInfoMenu) / sizeof(pmenu_t)) ;
+	else
+	{
+		// can't find motd.txt file, so fill with null..
+		i = 0;
+		while (i <= 20)
+		{
+			NHInfoMenu[i].text = NULL;
+			NHInfoMenu[i].align = PMENU_ALIGN_CENTER;
+			NHInfoMenu[i].arg = NULL;
+			NHInfoMenu[i].SelectFunc = NULL;
+			i++;
+		}
+		i = 1;
+	}
+	//if the file wasn't there, we just make up our own motd
+	//else
+	//	gi.centerprintf (newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n", NHVER);
+
+	strcpy(infotext[i], "Back");
+
+	NHInfoMenu[i].text = infotext[i];
+	NHInfoMenu[i].align = PMENU_ALIGN_CENTER;
+	NHInfoMenu[i].arg = NULL;
+	NHInfoMenu[i].SelectFunc = ReturnToNHMainMenu;
+	i++;
+
+	PMenu_Close(ent);
+
+	PMenu_Open(ent, NHInfoMenu, -1, sizeof(NHInfoMenu) / sizeof(pmenu_t));
 }
 
 
-void ShowNHHelpMenu(edict_t *ent, pmenu_t *p)
+void ShowNHHelpMenu(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHHelpMenu, -1, sizeof(NHHelpMenu) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHHelpMenu, -1, sizeof(NHHelpMenu) / sizeof(pmenu_t));
 }
-void ShowNHHelpMenu2(edict_t *ent, pmenu_t *p)
+void ShowNHHelpMenu2(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHHelpMenu2, -1, sizeof(NHHelpMenu2) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHHelpMenu2, -1, sizeof(NHHelpMenu2) / sizeof(pmenu_t));
 }
-void ShowNHHelpMenu3(edict_t *ent, pmenu_t *p)
+void ShowNHHelpMenu3(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHHelpMenu3, -1, sizeof(NHHelpMenu3) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHHelpMenu3, -1, sizeof(NHHelpMenu3) / sizeof(pmenu_t));
 }
-void ShowNHHelpMenu4(edict_t *ent, pmenu_t *p)
+void ShowNHHelpMenu4(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHHelpMenu4, -1, sizeof(NHHelpMenu4) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHHelpMenu4, -1, sizeof(NHHelpMenu4) / sizeof(pmenu_t));
 }
-void ShowNHHelpMenu5(edict_t *ent, pmenu_t *p)
+void ShowNHHelpMenu5(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHHelpMenu5, -1, sizeof(NHHelpMenu5) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHHelpMenu5, -1, sizeof(NHHelpMenu5) / sizeof(pmenu_t));
 }
 
-void ShowNHAdminMenu(edict_t *ent, pmenu_t *p)
+void ShowNHAdminMenu(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHAdminMenu, -1, sizeof(NHAdminMenu) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHAdminMenu, -1, sizeof(NHAdminMenu) / sizeof(pmenu_t));
 }
-void ShowNHMOTD(edict_t *ent, pmenu_t *p)
+
+void ShowNHMOTD(edict_t* ent, pmenu_t* p)
 {
-  PMenu_Close(ent);
-  ShowMOTD(ent) ;
+	PMenu_Close(ent);
+	ShowMOTD(ent);
 }
 
-void ShowNHModelsMenu(edict_t *ent, pmenu_t *p)
+void ShowNHModelsMenu(edict_t* ent, pmenu_t* p)
 {
-  int i=0;
+	int i = 0;
 
-  NHModelsMenu[i].text="*Models used";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  NHModelsMenu[i].text=" ";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  NHModelsMenu[i].text="Predator model is:";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  NHModelsMenu[i].text=" ";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  NHModelsMenu[i].text = strdup(getPredatorModel());
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  NHModelsMenu[i].text=" ";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  if(!marine_allow_custom->value)
-  {
-  	NHModelsMenu[i].text="Marine model is:";
-  	NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  	NHModelsMenu[i].arg=NULL;
-  	NHModelsMenu[i].SelectFunc=NULL;
-  	i++;
-  	NHModelsMenu[i].text=" ";
-  	NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  	NHModelsMenu[i].arg=NULL;
-  	NHModelsMenu[i].SelectFunc=NULL;
-  	i++;
-  	NHModelsMenu[i].text = strdup(getMarineModel());
-  	NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  	NHModelsMenu[i].arg=NULL;
-  	NHModelsMenu[i].SelectFunc=NULL;
-  	i++;
-  }
-  else
-  {
-  	NHModelsMenu[i].text = "Marines can choose any";
-  	NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  	NHModelsMenu[i].arg=NULL;
-  	NHModelsMenu[i].SelectFunc=NULL;
-  	i++;
-  	NHModelsMenu[i].text = "model except for";
-  	NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  	NHModelsMenu[i].arg=NULL;
-  	NHModelsMenu[i].SelectFunc=NULL;
-  	i++;
-  	NHModelsMenu[i].text = strdup(getPredatorModel());
-  	NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  	NHModelsMenu[i].arg=NULL;
-  	NHModelsMenu[i].SelectFunc=NULL;
-  	i++;
-  }
-  NHModelsMenu[i].text=" ";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=NULL;
-  i++;
-  NHModelsMenu[i].text="Back";
-  NHModelsMenu[i].align=PMENU_ALIGN_CENTER;
-  NHModelsMenu[i].arg=NULL;
-  NHModelsMenu[i].SelectFunc=ReturnToNHMainMenu;
-  i++; 
+	NHModelsMenu[i].text = "*Models used";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	NHModelsMenu[i].text = " ";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	NHModelsMenu[i].text = "Predator model is:";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	NHModelsMenu[i].text = " ";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	NHModelsMenu[i].text = strdup(getPredatorModel());
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	NHModelsMenu[i].text = " ";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	if (!marine_allow_custom->value)
+	{
+		NHModelsMenu[i].text = "Marine model is:";
+		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+		NHModelsMenu[i].arg = NULL;
+		NHModelsMenu[i].SelectFunc = NULL;
+		i++;
+		NHModelsMenu[i].text = " ";
+		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+		NHModelsMenu[i].arg = NULL;
+		NHModelsMenu[i].SelectFunc = NULL;
+		i++;
+		NHModelsMenu[i].text = strdup(getMarineModel());
+		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+		NHModelsMenu[i].arg = NULL;
+		NHModelsMenu[i].SelectFunc = NULL;
+		i++;
+	}
+	else
+	{
+		NHModelsMenu[i].text = "Marines can choose any";
+		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+		NHModelsMenu[i].arg = NULL;
+		NHModelsMenu[i].SelectFunc = NULL;
+		i++;
+		NHModelsMenu[i].text = "model except for";
+		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+		NHModelsMenu[i].arg = NULL;
+		NHModelsMenu[i].SelectFunc = NULL;
+		i++;
+		NHModelsMenu[i].text = strdup(getPredatorModel());
+		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+		NHModelsMenu[i].arg = NULL;
+		NHModelsMenu[i].SelectFunc = NULL;
+		i++;
+	}
+	NHModelsMenu[i].text = " ";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = NULL;
+	i++;
+	NHModelsMenu[i].text = "Back";
+	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
+	NHModelsMenu[i].arg = NULL;
+	NHModelsMenu[i].SelectFunc = ReturnToNHMainMenu;
+	i++;
 
 
-  PMenu_Close(ent);
-  
-  PMenu_Open(ent, NHModelsMenu, -1, sizeof(NHModelsMenu) / sizeof(pmenu_t)) ;
+	PMenu_Close(ent);
+
+	PMenu_Open(ent, NHModelsMenu, -1, sizeof(NHModelsMenu) / sizeof(pmenu_t));
 }
 
-void CloseNHMenu(edict_t *ent, pmenu_t *p)
+void CloseNHMenu(edict_t* ent, pmenu_t* p)
 {
 
-  PMenu_Close(ent) ;
+	PMenu_Close(ent);
 }
 
-void ReturnToNHMainMenu(edict_t *ent, pmenu_t *p) {
+void ReturnToNHMainMenu(edict_t* ent, pmenu_t* p) {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHMenu, -1, sizeof(NHMenu) / sizeof(pmenu_t));
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHMenu, -1, sizeof(NHMenu) / sizeof(pmenu_t));
 }
 
-void ShowNHCreditsMenu(edict_t *ent, pmenu_t *p) {
+void ShowNHCreditsMenu(edict_t* ent, pmenu_t* p) {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHCreditsMenu, -1, sizeof(NHCreditsMenu) / sizeof(pmenu_t));
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHCreditsMenu, -1, sizeof(NHCreditsMenu) / sizeof(pmenu_t));
 }
 
-void ShowNHCreditsMenu2(edict_t *ent, pmenu_t *p) {
+void ShowNHCreditsMenu2(edict_t* ent, pmenu_t* p) {
 
-  PMenu_Close(ent) ;
-  PMenu_Open(ent, NHCreditsMenu2, -1, sizeof(NHCreditsMenu2) / sizeof(pmenu_t));
+	PMenu_Close(ent);
+	PMenu_Open(ent, NHCreditsMenu2, -1, sizeof(NHCreditsMenu2) / sizeof(pmenu_t));
 }
 
-void ObserveGame(edict_t *ent, pmenu_t *p) {
+void ObserveGame(edict_t* ent, pmenu_t* p) {
 
-  PMenu_Close(ent) ;
-  ClearFlashlight(ent);
-  clearSafetyMode(ent) ;
+	PMenu_Close(ent);
+	ClearFlashlight(ent);
+	clearSafetyMode(ent);
 
-  Cmd_Observe_f(ent) ;
+	Cmd_Observe_f(ent);
 }
 
-void SetupBindings(edict_t *ent, pmenu_t *p) {
+void SetupBindings(edict_t* ent, pmenu_t* p) {
 
 	Cmd_Setup_f(ent);
 }
 
 // Enter the game.
-void EnterGame(edict_t *ent) {
+void EnterGame(edict_t* ent) {
 
-  if (ent->isObserving) {
-    //only if currently observing or chasecam, enter the game
+	if (ent->isObserving) {
+		//only if currently observing or chasecam, enter the game
 
-    // Get rid of the menu.
-    PMenu_Close(ent) ;
-    Start_Play_f(ent) ;
-  }
+		// Get rid of the menu.
+		PMenu_Close(ent);
+		Start_Play_f(ent);
+	}
 }
 
 // Start NH as observer. 
-qboolean NHStartClient(edict_t *ent)
+qboolean NHStartClient(edict_t* ent)
 {
 
-  ent->isFirstConnect = 1;  
-  stuffcmd(ent, "spectator 1\n");
+	ent->isFirstConnect = 1;
+	stuffcmd(ent, "spectator 1\n");
 
-  // To make sure you don't get pushed into the game immediately 
-  ent->isObserving = true;
+	// To make sure you don't get pushed into the game immediately 
+	ent->isObserving = true;
 
-  // Hurry up and do it..
-  // Don't want to wait for regular cycle to switch the user -
-  // can take too long.  
-  spectator_respawn(ent); 
+	// Hurry up and do it..
+	// Don't want to wait for regular cycle to switch the user -
+	// can take too long.  
+	spectator_respawn(ent);
 
-  ent->spectator_quick_switch = true;
-  ent->SuicidePredator = false;
+	ent->spectator_quick_switch = true;
+	ent->SuicidePredator = false;
 
-  // Cheat mode.
-  ent->isCheating = false ;
+	// Cheat mode.
+	ent->isCheating = false;
 
-  checkMarineSkin(ent, ent->client->pers.userinfo) ;
+	checkMarineSkin(ent, ent->client->pers.userinfo);
 
-  // Set graphics flags.
-  gi.dprintf("Stuffing gl_dynamic settings.\n") ;
-  stuffcmd(ent, "set gl_dynamic 1; set sw_drawflat 0\n") ;
-  		
-  // Show the NH menu.
-  //ShowNHMenu(ent);
-  return true;
+	// Set graphics flags.
+	gi.dprintf("Stuffing gl_dynamic settings.\n");
+	stuffcmd(ent, "set gl_dynamic 1; set sw_drawflat 0\n");
+
+	// Show the NH menu.
+	//ShowNHMenu(ent);
+	return true;
 
 }
