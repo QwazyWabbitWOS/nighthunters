@@ -220,7 +220,7 @@
       <BrowseInformation>true</BrowseInformation>
       <AdditionalIncludeDirectories>.\;..\;nhcommon\</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -248,9 +248,11 @@
       <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\game.def</ModuleDefinitionFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="flashlight.c" />
     <ClCompile Include="g_ai.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
@@ -263,18 +265,30 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="g_cmd_misc.c" />
+    <ClCompile Include="g_cmd_observe.c" />
+    <ClCompile Include="g_cmd_overload.c" />
+    <ClCompile Include="g_cmd_scopetoggle.c" />
+    <ClCompile Include="g_cmd_setup.c" />
+    <ClCompile Include="g_cmd_spotrep.c" />
+    <ClCompile Include="g_cmd_teleport.c" />
     <ClCompile Include="g_combat.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="g_ctf.c" />
+    <ClCompile Include="g_cvars.c" />
+    <ClCompile Include="g_flare.c" />
     <ClCompile Include="g_func.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="g_IRgoggles.c" />
     <ClCompile Include="g_items.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="g_lightning.c" />
     <ClCompile Include="g_main.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
@@ -287,10 +301,13 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="g_nh.c" />
+    <ClCompile Include="g_nh_light.c" />
     <ClCompile Include="g_phys.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="g_safety.c" />
     <ClCompile Include="g_save.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
@@ -419,98 +436,7 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
-    <ClCompile Include="nhcommon\flashlight.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_misc.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_observe.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_overload.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_scopetoggle.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_setup.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_spotrep.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_teleport.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_ctf.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cvars.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_flare.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_IRgoggles.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_lightning.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_nh.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_nh_light.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_safety.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_menu.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_motd.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_nhmenu.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_nhscoreboard.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_predator.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\q_devels.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="nhcommon\q_model.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
-    </ClCompile>
+    <ClCompile Include="performance.c" />
     <ClCompile Include="p_client.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
@@ -519,6 +445,11 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="p_menu.c" />
+    <ClCompile Include="p_motd.c" />
+    <ClCompile Include="p_nhmenu.c" />
+    <ClCompile Include="p_nhscoreboard.c" />
+    <ClCompile Include="p_predator.c" />
     <ClCompile Include="p_trail.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
@@ -531,6 +462,8 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="q_devels.c" />
+    <ClCompile Include="q_model.c" />
     <ClCompile Include="q_shared.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug Alpha|Win32'"> /QA21164 /MTd   /QA21164 /MTd </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'"> /QA21164   /QA21164 </AdditionalOptions>
@@ -538,9 +471,24 @@
     <ClCompile Include="strsep.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="flashlight.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="g_cmd_misc.h" />
+    <ClInclude Include="g_cmd_observe.h" />
+    <ClInclude Include="g_cmd_overload.h" />
+    <ClInclude Include="g_cmd_scopetoggle.h" />
+    <ClInclude Include="g_cmd_setup.h" />
+    <ClInclude Include="g_cmd_spotrep.h" />
+    <ClInclude Include="g_cmd_teleport.h" />
     <ClInclude Include="g_ctf.h" />
+    <ClInclude Include="g_cvars.h" />
+    <ClInclude Include="g_flare.h" />
+    <ClInclude Include="g_IRgoggles.h" />
+    <ClInclude Include="g_lightning.h" />
     <ClInclude Include="g_local.h" />
+    <ClInclude Include="g_nh.h" />
+    <ClInclude Include="g_nh_light.h" />
+    <ClInclude Include="g_safety.h" />
     <ClInclude Include="m_actor.h" />
     <ClInclude Include="m_berserk.h" />
     <ClInclude Include="m_boss2.h" />
@@ -564,34 +512,23 @@
     <ClInclude Include="m_soldier.h" />
     <ClInclude Include="m_supertank.h" />
     <ClInclude Include="m_tank.h" />
-    <ClInclude Include="nhcommon\flashlight.h" />
-    <ClInclude Include="nhcommon\g_cmd_misc.h" />
-    <ClInclude Include="nhcommon\g_cmd_observe.h" />
-    <ClInclude Include="nhcommon\g_cmd_overload.h" />
-    <ClInclude Include="nhcommon\g_cmd_scopetoggle.h" />
-    <ClInclude Include="nhcommon\g_cmd_setup.h" />
-    <ClInclude Include="nhcommon\g_cmd_spotrep.h" />
-    <ClInclude Include="nhcommon\g_cmd_teleport.h" />
-    <ClInclude Include="nhcommon\g_cvars.h" />
-    <ClInclude Include="nhcommon\g_flare.h" />
-    <ClInclude Include="nhcommon\g_IRgoggles.h" />
-    <ClInclude Include="nhcommon\g_lightning.h" />
-    <ClInclude Include="nhcommon\g_nh.h" />
-    <ClInclude Include="nhcommon\g_nh_light.h" />
-    <ClInclude Include="nhcommon\g_safety.h" />
-    <ClInclude Include="nhcommon\p_menu.h" />
-    <ClInclude Include="nhcommon\p_motd.h" />
-    <ClInclude Include="nhcommon\p_nhhud.h" />
-    <ClInclude Include="nhcommon\p_nhmenu.h" />
-    <ClInclude Include="nhcommon\p_nhscoreboard.h" />
-    <ClInclude Include="nhcommon\p_predator.h" />
-    <ClInclude Include="nhcommon\q_devels.h" />
-    <ClInclude Include="nhcommon\q_model.h" />
+    <ClInclude Include="performance.h" />
+    <ClInclude Include="p_menu.h" />
+    <ClInclude Include="p_motd.h" />
+    <ClInclude Include="p_nhhud.h" />
+    <ClInclude Include="p_nhmenu.h" />
+    <ClInclude Include="p_nhscoreboard.h" />
+    <ClInclude Include="p_predator.h" />
+    <ClInclude Include="q_devels.h" />
+    <ClInclude Include="q_model.h" />
     <ClInclude Include="q_shared.h" />
     <ClInclude Include="strsep.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="game.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GNUmakefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,6 +27,7 @@ cvar_t* maxspectators;
 cvar_t* maxentities;
 cvar_t* g_select_empty;
 cvar_t* dedicated;
+cvar_t* gamedebug;
 
 cvar_t* filterban;
 
@@ -156,6 +157,16 @@ void ShutdownGame(void)
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
+
+#ifdef _WIN32
+	OutputDebugString("ShutdownGame() was called.\n");
+	OutputDebugString("Dump objects since startup.\n");
+	_CrtMemDumpAllObjectsSince(&startup1);
+	OutputDebugString("Memory stats since startup.\n");
+	_CrtMemDumpStatistics(&startup1);
+	_CrtDumpMemoryLeaks();
+#endif
+
 }
 
 
@@ -278,9 +289,13 @@ The timelimit or fraglimit has been exceeded
 void EndDMLevel(void)
 {
 	edict_t* ent;
-	edict_t* e2; // ***** NH Change *****
-	int i, j = 0, lastsize = 1; // ***** NH Change *****
-	char* s = NULL, * t, * f, * temp;
+	int count = 0;
+	int lastsize = 1; // ***** NH Change *****
+	char* s = NULL;
+	char* t = NULL;
+	char* f;
+	char* temp = NULL;
+	char* tmp = NULL;
 	char lastmap[64] = { 0 };
 	static const char* seps = " ,\n\r";
 
@@ -296,16 +311,7 @@ void EndDMLevel(void)
 		return;
 	}
 
-	// ***** Start of NH Changes *****
-	// Make this a function.
-	// It's got general use.
-	for (i = 0, e2 = g_edicts + 1; i < maxclients->value; i++, e2++) {
-		if (!e2->inuse)
-			continue;
-		j++;
-	}
-
-	// ***** End of NH Changes *****
+	count = CountConnectedClients();
 
 	// see if it's in the map list
 
@@ -317,50 +323,57 @@ void EndDMLevel(void)
 			sv_maplist_medium_max->value = 999;
 
 
-
 		// ***** Start of NH Changes *****
 		// This really should be done elsewhere.
-		if (strlen(maplist_lastmap) == 0) {
+		if (strlen(maplist_lastmap) == 0 && strlen(sv_maplist->string)) {
 			temp = strdup(sv_maplist->string);
+			if (temp)
+				tmp = temp;
 			strcpy(maplist_lastmap, strsep(&temp, seps));
 			while (temp != NULL)
 				strcpy(maplist_lastmap, strsep(&temp, seps));
+			free(tmp);
 		}
 
-		if (strlen(maplist2_lastmap) == 0) {
+		if (strlen(maplist2_lastmap) == 0 && strlen(sv_maplist2->string)) {
 			temp = strdup(sv_maplist2->string);
+			if (temp)
+				tmp = temp;
 			strcpy(maplist2_lastmap, strsep(&temp, seps));
 			while (temp != NULL)
 				strcpy(maplist2_lastmap, strsep(&temp, seps));
-
+			free(tmp);
 		}
 
-		if (strlen(maplist3_lastmap) == 0) {
+		if (strlen(maplist3_lastmap) == 0 && strlen(sv_maplist2->string)) {
 			temp = strdup(sv_maplist3->string);
+			if (temp)
+				tmp = temp;
 			strcpy(maplist3_lastmap, strsep(&temp, seps));
 			while (temp != NULL)
 				strcpy(maplist3_lastmap, strsep(&temp, seps));
-
+			free(tmp);
 		}
 
-		if ((j <= getMaplistSmallMax()) && (*sv_maplist->string)) {
+
+		if ((count <= getMaplistSmallMax()) && (*sv_maplist->string)) {
 			s = strdup(sv_maplist->string);
-			strcpy(lastmap, maplist_lastmap);
+			Q_strncpyz(lastmap, sizeof lastmap, maplist_lastmap);
 			lastsize = 1;
 		}
 
-		if (((j > getMaplistSmallMax()) &&
-			(j <= getMaplistMediumMax())) &&
+		if (((count > getMaplistSmallMax()) &&
+			(count <= getMaplistMediumMax())) &&
 			*sv_maplist2->string) {
 			s = strdup(sv_maplist2->string);
-			strcpy(lastmap, maplist2_lastmap);
+			Q_strncpyz(lastmap, sizeof lastmap, maplist2_lastmap);
 			lastsize = 2;
 		}
 
-		if ((j > getMaplistMediumMax()) &&
+		if ((count > getMaplistMediumMax()) &&
 			*sv_maplist3->string) {
 			s = strdup(sv_maplist3->string);
-			strcpy(lastmap, maplist3_lastmap);
+			Q_strncpyz(lastmap, sizeof lastmap, maplist3_lastmap);
 			lastsize = 3;
 		}
 
@@ -384,25 +397,25 @@ void EndDMLevel(void)
 					// Go to first level on list.
 					if (f == NULL) {
 						BeginIntermission(CreateTargetChangeLevel(level.mapname));
-						strcpy(lastmap, level.mapname);
+						Q_strncpyz(lastmap, sizeof lastmap, level.mapname);
 					}
 					else {
 						BeginIntermission(CreateTargetChangeLevel(f));
-						strcpy(lastmap, f);
+						Q_strncpyz(lastmap, sizeof lastmap, f);
 					}
 				}
 				else {
 					BeginIntermission(CreateTargetChangeLevel(t));
-					strcpy(lastmap, t);
+					Q_strncpyz(lastmap, sizeof lastmap, t);
 				}
 
 				// ***** Start of NH Changes *****
 				if (lastsize == 1)
-					strcpy(maplist_lastmap, lastmap);
+					Q_strncpyz(maplist_lastmap, sizeof maplist_lastmap, lastmap);
 				else if (lastsize == 2)
-					strcpy(maplist2_lastmap, lastmap);
+					Q_strncpyz(maplist2_lastmap, sizeof maplist2_lastmap, lastmap);
 				else if (lastsize == 3)
-					strcpy(maplist3_lastmap, lastmap);
+					Q_strncpyz(maplist3_lastmap, sizeof maplist3_lastmap, lastmap);
 
 				free(s);
 				return;

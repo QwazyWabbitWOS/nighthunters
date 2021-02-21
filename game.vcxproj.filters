@@ -15,34 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="nhcommon\flashlight.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="g_ai.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="g_chase.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_misc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_observe.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_overload.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_scopetoggle.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_setup.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_spotrep.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cmd_teleport.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="g_cmds.c">
@@ -51,25 +27,10 @@
     <ClCompile Include="g_combat.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nhcommon\g_ctf.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_cvars.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_flare.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="g_func.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nhcommon\g_IRgoggles.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="g_items.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_lightning.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="g_main.c">
@@ -81,16 +42,7 @@
     <ClCompile Include="g_monster.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nhcommon\g_nh.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_nh_light.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="g_phys.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\g_safety.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="g_save.c">
@@ -195,21 +147,6 @@
     <ClCompile Include="p_hud.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nhcommon\p_menu.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_motd.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_nhmenu.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_nhscoreboard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\p_predator.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="p_trail.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -219,66 +156,87 @@
     <ClCompile Include="p_weapon.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nhcommon\q_devels.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nhcommon\q_model.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="q_shared.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="strsep.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="performance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="flashlight.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_misc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_observe.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_overload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_scopetoggle.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_setup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_spotrep.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmd_teleport.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_ctf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cvars.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_flare.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_IRgoggles.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_lightning.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_nh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_nh_light.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_safety.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="p_menu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="p_motd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="p_nhmenu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="p_nhscoreboard.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="p_predator.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="q_devels.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="q_model.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="nhcommon\flashlight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_misc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_observe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_overload.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_scopetoggle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_setup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_spotrep.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cmd_teleport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_cvars.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_flare.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_IRgoggles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_lightning.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="g_local.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_nh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_nh_light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\g_safety.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
@@ -353,30 +311,6 @@
     <ClInclude Include="m_tank.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nhcommon\p_menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\p_motd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\p_nhhud.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\p_nhmenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\p_nhscoreboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\p_predator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\q_devels.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nhcommon\q_model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="q_shared.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -386,10 +320,85 @@
     <ClInclude Include="g_ctf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="performance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_IRgoggles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_lightning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_nh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_nh_light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_safety.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p_menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p_motd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p_nhhud.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p_nhscoreboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p_predator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p_nhmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flashlight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_observe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_overload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_scopetoggle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_setup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_spotrep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmd_teleport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cvars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="g_flare.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="q_devels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="q_model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="game.def">
       <Filter>Resource Files</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GNUmakefile" />
   </ItemGroup>
 </Project>

@@ -42,6 +42,9 @@ typedef enum {false, true}	qboolean;
 #define NULL ((void *)0)
 #endif
 
+size_t Q_strncpyz(char* dst, size_t dstSize, const char* src);
+size_t Q_strncatz(char* dst, size_t dstSize, const char* src);
+
 
 // angle indexes
 #define	PITCH				0		// up / down

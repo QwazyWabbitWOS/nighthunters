@@ -192,7 +192,7 @@ struct {
 };
 
 
-static void CTFSay_Team_Location(edict_t* who, char* buf)
+void CTFSay_Team_Location(edict_t* who, char* buf)
 {
 	edict_t* what = NULL;
 	edict_t* hot = NULL;
@@ -401,3 +401,21 @@ void CTFSay_Team(edict_t* who, char* msg)
 			who->client->pers.netname, outmsg);
 	}
 }
+
+int CountConnectedClients(void)
+{
+	int n, count;
+	edict_t* player;
+
+	count = 0;
+	for (n = 1; n <= maxclients->value; n++)
+	{
+		player = &g_edicts[n];
+		if (!player->inuse)
+			continue;
+		else
+			count++;
+	}
+	return count;
+}
+

@@ -1,0 +1,355 @@
+flashlight.o: flashlight.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_IRgoggles.o: g_IRgoggles.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h g_IRgoggles.h
+g_ai.o: g_ai.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_chase.o: g_chase.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_cmd_misc.o: g_cmd_misc.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_cmd_observe.o: g_cmd_observe.c g_local.h q_shared.h performance.h \
+ game.h g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h g_cmd_observe.h
+g_cmd_overload.o: g_cmd_overload.c g_local.h q_shared.h performance.h \
+ game.h g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_cmd_scopetoggle.o: g_cmd_scopetoggle.c g_local.h q_shared.h \
+ performance.h game.h g_flare.h p_menu.h p_nhmenu.h flashlight.h \
+ q_devels.h p_nhhud.h g_safety.h q_model.h g_nh_light.h p_predator.h \
+ g_nh.h p_motd.h g_cmd_teleport.h g_lightning.h g_cvars.h \
+ p_nhscoreboard.h g_cmd_overload.h strsep.h g_ctf.h
+g_cmd_setup.o: g_cmd_setup.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h g_cmd_setup.h
+g_cmd_spotrep.o: g_cmd_spotrep.c g_local.h q_shared.h performance.h \
+ game.h g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_cmd_teleport.o: g_cmd_teleport.c g_local.h q_shared.h performance.h \
+ game.h g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h g_cmd_observe.h m_player.h
+g_cmds.o: g_cmds.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_player.h g_cmd_observe.h g_IRgoggles.h g_cmd_scopetoggle.h \
+ g_cmd_misc.h g_cmd_spotrep.h g_cmd_setup.h
+g_combat.o: g_combat.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_ctf.o: g_ctf.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h g_IRgoggles.h g_cmd_observe.h
+g_cvars.o: g_cvars.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_flare.o: g_flare.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_func.o: g_func.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_items.o: g_items.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h g_IRgoggles.h
+g_lightning.o: g_lightning.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_main.o: g_main.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_misc.o: g_misc.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_monster.o: g_monster.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_nh.o: g_nh.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_nh_light.o: g_nh_light.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_phys.o: g_phys.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_safety.o: g_safety.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_save.o: g_save.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h g_IRgoggles.h
+g_spawn.o: g_spawn.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h g_IRgoggles.h
+g_svcmds.o: g_svcmds.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_target.o: g_target.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_trigger.o: g_trigger.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_turret.o: g_turret.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+g_utils.o: g_utils.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+g_weapon.o: g_weapon.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+m_actor.o: m_actor.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_actor.h
+m_berserk.o: m_berserk.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_berserk.h
+m_boss2.o: m_boss2.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_boss2.h
+m_boss3.o: m_boss3.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_boss32.h
+m_boss31.o: m_boss31.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_boss31.h
+m_boss32.o: m_boss32.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_boss32.h
+m_brain.o: m_brain.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_brain.h
+m_chick.o: m_chick.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_chick.h
+m_flash.o: m_flash.c q_shared.h
+m_flipper.o: m_flipper.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_flipper.h
+m_float.o: m_float.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_float.h
+m_flyer.o: m_flyer.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_flyer.h
+m_gladiator.o: m_gladiator.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_gladiator.h
+m_gunner.o: m_gunner.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_gunner.h
+m_hover.o: m_hover.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_hover.h
+m_infantry.o: m_infantry.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_infantry.h
+m_insane.o: m_insane.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_insane.h
+m_medic.o: m_medic.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_medic.h
+m_move.o: m_move.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+m_mutant.o: m_mutant.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_mutant.h
+m_parasite.o: m_parasite.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_parasite.h
+m_soldier.o: m_soldier.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_soldier.h
+m_supertank.o: m_supertank.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_supertank.h
+m_tank.o: m_tank.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_tank.h
+p_client.o: p_client.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_player.h g_IRgoggles.h \
+ g_cmd_observe.h
+p_hud.o: p_hud.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+p_menu.o: p_menu.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+p_motd.o: p_motd.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+p_nhmenu.o: p_nhmenu.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h g_cmd_observe.h g_cmd_setup.h
+p_nhscoreboard.o: p_nhscoreboard.c g_local.h q_shared.h performance.h \
+ game.h g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+p_predator.o: p_predator.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+p_trail.o: p_trail.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+p_view.o: p_view.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h m_player.h g_IRgoggles.h
+p_weapon.o: p_weapon.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h m_player.h
+performance.o: performance.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+q_devels.o: q_devels.c g_local.h q_shared.h performance.h game.h \
+ g_flare.h p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h \
+ g_safety.h q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h \
+ g_cmd_teleport.h g_lightning.h g_cvars.h p_nhscoreboard.h \
+ g_cmd_overload.h strsep.h g_ctf.h
+q_model.o: q_model.c g_local.h q_shared.h performance.h game.h g_flare.h \
+ p_menu.h p_nhmenu.h flashlight.h q_devels.h p_nhhud.h g_safety.h \
+ q_model.h g_nh_light.h p_predator.h g_nh.h p_motd.h g_cmd_teleport.h \
+ g_lightning.h g_cvars.h p_nhscoreboard.h g_cmd_overload.h strsep.h \
+ g_ctf.h
+q_shared.o: q_shared.c q_shared.h performance.h
+strsep.o: strsep.c

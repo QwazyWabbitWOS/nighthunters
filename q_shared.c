@@ -1,4 +1,5 @@
 #include "q_shared.h"
+#include "performance.h"
 
 #define DEG2RAD( a ) ( a * M_PI ) / 180.0F
 
@@ -1211,6 +1212,64 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 	if (len >= size)
 		Com_Printf ("Com_sprintf: overflow of %i in %i\n", len, size);
 	strncpy (dest, bigbuffer, size-1);
+}
+
+size_t Q_strncpyz(char* dst, size_t dstSize, const char* src)
+{
+	char* d = dst;
+	const char* s = src;
+	size_t        decSize = dstSize;
+
+	if (!dst) {
+		DbgPrintf("NULL destination passed to %s\n", __func__);
+		return 0;
+	}
+	if (!src) {
+		DbgPrintf("NULL source passed to %s\n", __func__);
+		return 0;
+	}
+	if (dstSize < 1) {
+		DbgPrintf("Bad sized passed to %s\n", __func__);
+		return 0;
+	}
+
+	while (--decSize && *s)
+		*d++ = *s++;
+	*d = 0;
+
+	if (decSize == 0)    // Unsufficent room in dst, return count + length of remaining src
+		return (s - src - 1 + strlen(s));
+	else
+		return (s - src - 1);    // returned count excludes NULL terminator
+}
+
+size_t Q_strncatz(char* dst, size_t dstSize, const char* src)
+{
+	char* d = dst;
+	const char* s = src;
+	size_t        decSize = dstSize;
+	size_t        dLen;
+
+	if (!dst || !src || dstSize < 1) {
+		DbgPrintf("Bad arguments passed to %s\n", __func__);
+		exit(EXIT_FAILURE);
+	}
+
+	while (--decSize && *d)
+		d++;
+	dLen = d - dst;
+
+	if (decSize == 0)
+		return (dLen + strlen(s));
+
+	if (decSize > 0) {
+		while (--decSize && *s)
+			*d++ = *s++;
+
+		*d = 0;
+	}
+
+	return (dLen + (s - src));    // returned count excludes NULL terminator
 }
 
 /*

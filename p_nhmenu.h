@@ -1,5 +1,14 @@
-#pragma once
+//============================================================================
+// p_nhmenu.h
+//
+// Night Hunters menu
+//
+// Originally coded by DingBat
+//
+// Copyright (c), 1999 The BatCave. All Rights Reserved.
+//============================================================================
 
+qboolean showscores;// set layout stat
 void ShowNHMenu(edict_t* ent);
 void ShowNHInfoMenu(edict_t* ent, pmenu_t* p);
 void ShowNHHelpMenu(edict_t* ent, pmenu_t* p);
@@ -18,4 +27,4 @@ void EnterGame(edict_t* ent);
 void ObserveGame(edict_t* ent, pmenu_t* p);
 void ChaseCam(edict_t* ent, pmenu_t* p);
 void SetupBindings(edict_t* ent, pmenu_t* p);
-
+qboolean NHStartClient(edict_t* ent);

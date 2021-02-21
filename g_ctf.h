@@ -91,5 +91,6 @@ void CTFChaseCam(edict_t *ent);
 void CTFSay_Team_Location(edict_t *who, char *buf);
 void CTFSay_Team(edict_t *who, char *msg);
 
+int CountConnectedClients(void);
 
 #endif	/* G_CTF_H */
