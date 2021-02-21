@@ -193,7 +193,7 @@ void G_UseTargets (edict_t *ent, edict_t *activator)
 	if (ent->killtarget)
 	{
 		t = NULL;
-		while ((t = G_Find (t, FOFS(targetname), ent->killtarget)))
+		while ((t = G_Find (t, FOFS(targetname), ent->killtarget)) != NULL)
 		{
 			G_FreeEdict (t);
 			if (!ent->inuse)
@@ -210,7 +210,7 @@ void G_UseTargets (edict_t *ent, edict_t *activator)
 	if (ent->target)
 	{
 		t = NULL;
-		while ((t = G_Find (t, FOFS(targetname), ent->target)))
+		while ((t = G_Find (t, FOFS(targetname), ent->target)) != NULL)
 		{
 			// doors fire area portals in a specific way
 			if (!Q_stricmp(t->classname, "func_areaportal") &&

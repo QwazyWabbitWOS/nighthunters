@@ -31,26 +31,26 @@ some map switching in...
 void Cmd_Gotomap_f (edict_t *ent)
 {
 	char	*name;
-	char	*level;
+	char	*mylevel;
 
 	name = gi.args();
 
 	if (Q_stricmp(name, "q2dm1") == 0)
-		level = "q2dm1";
+		mylevel = "q2dm1";
 	else if (Q_stricmp(name, "q2dm2") == 0)
-		level = "q2dm2";
+		mylevel = "q2dm2";
 	else if (Q_stricmp(name, "q2dm3") == 0)
-		level = "q2dm3";
+		mylevel = "q2dm3";
 	else if (Q_stricmp(name, "q2dm4") == 0)
-		level = "q2dm4";
+		mylevel = "q2dm4";
 	else if (Q_stricmp(name, "q2dm5") == 0)
-		level = "q2dm5";
+		mylevel = "q2dm5";
 	else if (Q_stricmp(name, "q2dm6") == 0)
-		level = "q2dm6";
+		mylevel = "q2dm6";
 	else if (Q_stricmp(name, "q2dm7") == 0)
-		level = "q2dm7";
+		mylevel = "q2dm7";
 	else if (Q_stricmp(name, "q2dm8") == 0)
-		level = "q2dm8";
+		mylevel = "q2dm8";
 	else
 	{
 		gi.cprintf(ent, PRINT_HIGH, "Error, bad map name.\n");
@@ -64,7 +64,7 @@ void Cmd_Gotomap_f (edict_t *ent)
 	// go to a specific map
 	ent = G_Spawn ();
 	ent->classname = "target_changelevel";
-	ent->map = level;
+	ent->map = mylevel;
 
 	BeginIntermission (ent);
 }
