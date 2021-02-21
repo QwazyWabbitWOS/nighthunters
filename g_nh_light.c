@@ -10,14 +10,16 @@
 #include "g_local.h"
 #include "g_nh_light.h" // NH changes: Light detection and enforcement.
 
+static qboolean stuff_light = true;
+
 qboolean
-toggleStuffLight() {
+toggleStuffLight(void) {
 
 	stuff_light = !stuff_light;
 	return stuff_light;
 }
 
-qboolean stuffLight() {
+qboolean stuffLight(void) {
 	return stuff_light;
 }
 

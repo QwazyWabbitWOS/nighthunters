@@ -378,24 +378,6 @@ void WriteField1(FILE* f, field_t* field, byte* base)
 		*(int*)p = index;
 		break;
 
-		//relative to code segment
-	case F_FUNCTION:
-		if (*(byte**)p == NULL)
-			index = 0;
-		else
-			index = *(byte**)p - ((byte*)InitGame);
-		*(int*)p = index;
-		break;
-
-		//relative to data segment
-	case F_MMOVE:
-		if (*(byte**)p == NULL)
-			index = 0;
-		else
-			index = *(byte**)p - (byte*)&mmove_reloc;
-		*(int*)p = index;
-		break;
-
 	default:
 		gi.error("WriteEdict: unknown field type");
 	}
@@ -477,24 +459,6 @@ void ReadField(FILE* f, field_t* field, byte* base)
 			*(gitem_t**)p = NULL;
 		else
 			*(gitem_t**)p = &itemlist[index];
-		break;
-
-		//relative to code segment
-	case F_FUNCTION:
-		index = *(int*)p;
-		if (index == 0)
-			*(byte**)p = NULL;
-		else
-			*(byte**)p = ((byte*)InitGame) + index;
-		break;
-
-		//relative to data segment
-	case F_MMOVE:
-		index = *(int*)p;
-		if (index == 0)
-			*(byte**)p = NULL;
-		else
-			*(byte**)p = (byte*)&mmove_reloc + index;
 		break;
 
 	default:

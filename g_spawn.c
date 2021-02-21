@@ -333,17 +333,17 @@ ED_NewString
 char *ED_NewString (char *string)
 {
 	char	*newb, *new_p;
-	int		i,l;
+	int		i,length;
 	
-	l = strlen(string) + 1;
-
-	newb = gi.TagMalloc (l, TAG_LEVEL);
-
+	length = strlen(string) + 1;
+	
+	newb = gi.TagMalloc (length, TAG_LEVEL);
+	
 	new_p = newb;
-
-	for (i=0 ; i< l ; i++)
+	
+	for (i=0 ; i<length ; i++)
 	{
-		if (string[i] == '\\' && i < l-1)
+		if (string[i] == '\\' && i < length-1)
 		{
 			i++;
 			if (string[i] == 'n')
@@ -374,8 +374,8 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 	field_t	*f;
 	byte	*b;
 	float	v;
-	vec3_t	vec;
-
+	vec3_t	vec = { 0 };
+	
 	for (f=fields ; f->name ; f++)
 	{
 		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key))
@@ -447,18 +447,18 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 		if (com_token[0] == '}')
 			break;
 		if (!data)
-			gi.error ("ED_ParseEntity: EOF without closing brace");
-
+			gi.error ("%s: EOF without closing brace", __func__);
+		
 		strncpy (keyname, com_token, sizeof(keyname)-1);
 		
 	// parse value	
 		com_token = COM_Parse (&data);
 		if (!data)
-			gi.error ("ED_ParseEntity: EOF without closing brace");
-
+			gi.error ("%s: EOF without closing brace", __func__);
+		
 		if (com_token[0] == '}')
-			gi.error ("ED_ParseEntity: closing brace without data");
-
+			gi.error ("%s: closing brace without data", __func__);
+		
 		init = true;	
 
 	// keynames with a leading underscore are used for utility comments,
@@ -580,6 +580,7 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 			gi.error("ED_LoadFromFile: found %s when expecting {", com_token);
 			return; //QW// never executes.
 		}
+
 		if (!ent)
 			ent = g_edicts;
 		else
@@ -588,7 +589,9 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 		entities = ED_ParseEdict (entities, ent);
 
 		// yet another map hack
-		if (!Q_stricmp(level.mapname, "command") && !Q_stricmp(ent->classname, "trigger_once") && !Q_stricmp(ent->model, "*27"))
+		if (ent && !Q_stricmp(level.mapname, "command") && 
+			!Q_stricmp(ent->classname, "trigger_once") && 
+			!Q_stricmp(ent->model, "*27"))
 			ent->spawnflags &= ~SPAWNFLAG_NOT_HARD;
 
 		// remove things (except the world) from different skill levels or deathmatch

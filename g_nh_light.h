@@ -8,9 +8,8 @@
 //
 //============================================================================
 
-static qboolean stuff_light = true;
 
-qboolean toggleStuffLight();
-qboolean stuffLight();
+qboolean toggleStuffLight(void);
+qboolean stuffLight(void);
 void getUserVar(edict_t* ent, char* var);
 void checkCheating(edict_t* ent, char* userinfo);
