@@ -7,7 +7,7 @@
 //
 // Please browse qdevels.c for function descriptions.
 
-
+//QW// Just don't friggin use this.
 #define for_each_player(JOE_BLOGGS,INDEX)				\
 for(INDEX=1;INDEX<=maxclients->value;INDEX++)			\
 	if ((JOE_BLOGGS=&g_edicts[i]) && JOE_BLOGGS->inuse)

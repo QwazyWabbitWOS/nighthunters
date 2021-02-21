@@ -8,6 +8,7 @@
 //===========================================================================
 
 #include "g_local.h"
+#include "g_nh_light.h" // NH changes: Light detection and enforcement.
 
 qboolean
 toggleStuffLight() {

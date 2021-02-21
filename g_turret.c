@@ -22,7 +22,7 @@ float SnapToEights(float x)
 		x += 0.5;
 	else
 		x -= 0.5;
-	return 0.125 * (int)x;
+	return 0.125f * (int)x;
 }
 
 
@@ -133,7 +133,7 @@ void turret_breach_think (edict_t *self)
 	if (delta[1] < -1 * self->speed * FRAMETIME)
 		delta[1] = -1 * self->speed * FRAMETIME;
 
-	VectorScale (delta, 1.0/FRAMETIME, self->avelocity);
+	VectorScale (delta, 1.0f/FRAMETIME, self->avelocity);
 
 	self->nextthink = level.time + FRAMETIME;
 
@@ -155,21 +155,21 @@ void turret_breach_think (edict_t *self)
 
 		// x & y
 		angle = self->s.angles[1] + self->owner->move_origin[1];
-		angle *= (M_PI*2 / 360);
-		target[0] = SnapToEights(self->s.origin[0] + cos(angle) * self->owner->move_origin[0]);
-		target[1] = SnapToEights(self->s.origin[1] + sin(angle) * self->owner->move_origin[0]);
+		angle *= (float) (M_PI * 2.0 / 360.0);
+		target[0] = SnapToEights(self->s.origin[0] + (float) cos(angle) * self->owner->move_origin[0]);
+		target[1] = SnapToEights(self->s.origin[1] + (float) sin(angle) * self->owner->move_origin[0]);
 		target[2] = self->owner->s.origin[2];
 
 		VectorSubtract (target, self->owner->s.origin, dir);
-		self->owner->velocity[0] = dir[0] * 1.0 / FRAMETIME;
-		self->owner->velocity[1] = dir[1] * 1.0 / FRAMETIME;
+		self->owner->velocity[0] = dir[0] * 1.0f / FRAMETIME;
+		self->owner->velocity[1] = dir[1] * 1.0f / FRAMETIME;
 
 		// z
-		angle = self->s.angles[PITCH] * (M_PI*2 / 360);
-		target_z = SnapToEights(self->s.origin[2] + self->owner->move_origin[0] * tan(angle) + self->owner->move_origin[2]);
+		angle = self->s.angles[PITCH] * (float) (M_PI * 2.0 / 360.0);
+		target_z = SnapToEights(self->s.origin[2] + self->owner->move_origin[0] * (float) tan(angle) + self->owner->move_origin[2]);
 
 		diff = target_z - self->owner->s.origin[2];
-		self->owner->velocity[2] = diff * 1.0 / FRAMETIME;
+		self->owner->velocity[2] = diff * 1.0f / FRAMETIME;
 
 		if (self->spawnflags & 65536)
 		{
@@ -313,21 +313,23 @@ void turret_driver_think (edict_t *self)
 		}
 	}
 
-	// let the turret know where we want it to aim
-	VectorCopy (self->enemy->s.origin, target);
-	target[2] += self->enemy->viewheight;
-	VectorSubtract (target, self->target_ent->s.origin, dir);
-	vectoangles (dir, self->target_ent->move_angles);
-
+	if (self->enemy)
+	{
+		// let the turret know where we want it to aim
+		VectorCopy(self->enemy->s.origin, target);
+		target[2] += self->enemy->viewheight;
+		VectorSubtract(target, self->target_ent->s.origin, dir);
+		vectoangles(dir, self->target_ent->move_angles);
+	}
 	// decide if we should shoot
 	if (level.time < self->monsterinfo.attack_finished)
 		return;
 
-	reaction_time = (3 - skill->value) * 1.0;
+	reaction_time = (3 - skill->value) * 1.0f;
 	if ((level.time - self->monsterinfo.trail_time) < reaction_time)
 		return;
 
-	self->monsterinfo.attack_finished = level.time + reaction_time + 1.0;
+	self->monsterinfo.attack_finished = level.time + reaction_time + 1.0f;
 	//FIXME how do we really want to pass this along?
 	self->target_ent->spawnflags |= 65536;
 }

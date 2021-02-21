@@ -40,8 +40,9 @@ void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 	int     sorted[MAX_CLIENTS];
 	int     sortedscores[MAX_CLIENTS];
 	int     score, total;
-	int     picnum;
-	int     x, y;
+	//int     picnum;
+	//int     x;
+	int     y;
 	gclient_t* cl;
 	edict_t* cl_ent;
 	//char    *tag; //QW// Unused.
@@ -98,10 +99,10 @@ void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 		cl = &game.clients[sorted[i]];
 		cl_ent = g_edicts + 1 + sorted[i];
 
-		picnum = gi.imageindex("i_fixme");
+		//picnum = gi.imageindex("i_fixme");
 
 		// New locations for entries
-		x = 32;
+		//x = 32;
 		y = 32 + (8 * i);
 
 		// Determine player status.

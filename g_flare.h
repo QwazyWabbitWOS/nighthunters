@@ -32,29 +32,16 @@ int getFlareDamage();
 void validateFlareDamageRadius();
 int getFlareDamageRadius();
 
-static void Flare_End(edict_t *ent) ;
-static void Flare_Burnout(edict_t *ent) ;
-static void Flare_Die(edict_t *self, 
-		      edict_t *inflictor, 
-		      edict_t *attacker, 
-		      int damage, 
-		      vec3_t point) ;
-static void Flare_Explode(edict_t *ent) ;
-static void Flare_Touch(edict_t *ent, 
-						edict_t *other, 
-						cplane_t *plane,
-						csurface_t *surf) ;
-void fire_flare(edict_t *self, 
-				vec3_t start, 
-				vec3_t aimdir,
-				int damage,
-				int speed, 
-				float timer, 
-				float damage_radius, 
-				qboolean held) ;
-void Cmd_Flare_f(edict_t *ent) ;
-				
-void weapon_flare_fire(edict_t *ent, qboolean held) ;
-void Weapon_Flare (edict_t *ent) ;
+void Flare_End(edict_t* ent);
+void Flare_Burnout(edict_t* ent);
+void Flare_Die(edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, vec3_t point);
+void Flare_Explode(edict_t* ent);
+void Flare_Touch(edict_t* ent, edict_t* other, cplane_t* plane, csurface_t* surf);
+void fire_flare(edict_t* self, vec3_t start, vec3_t aimdir, int damage, 
+	int speed, float timer, float damage_radius, qboolean held);
+void Cmd_Flare_f(edict_t* ent);
+
+void weapon_flare_fire(edict_t* ent, qboolean held);
+void Weapon_Flare(edict_t* ent);
 
 

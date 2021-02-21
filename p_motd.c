@@ -26,7 +26,9 @@ void ShowMOTD(edict_t* ent)
 
 	FILE* motd_file;
 
-	if (motd_file = fopen("nhunters/motd.txt", "r")) {
+	motd_file = fopen("nhunters/motd.txt", "r");
+	if (motd_file)
+	{
 
 		// we successfully opened the file "motd.txt"
 		if (fgets(textfile, 500, motd_file)) {

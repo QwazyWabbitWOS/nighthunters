@@ -40,10 +40,10 @@
 // Use this function to send a command string to a CLIENT.
 // E.g. stuffcmd(player, "alias ready \"cmd ready\"\n");
 
-void stuffcmd(edict_t *e, char *s) {
-        gi.WriteByte (11);
-        gi.WriteString (s);
-        gi.unicast (e, true);
+void stuffcmd(edict_t* e, char* s) {
+	gi.WriteByte(11);
+	gi.WriteString(s);
+	gi.unicast(e, true);
 }
 
 
@@ -52,20 +52,20 @@ void stuffcmd(edict_t *e, char *s) {
 // Here is a nice little function I wrote to find a player's
 // entity structure by his name.
 
-edict_t *ent_by_name (char *target)
+edict_t* ent_by_name(char* target)
 {
-    int i;
-    edict_t *targ=NULL;
-    for (i=0;;i++)
-     {
-        if (i > globals.num_edicts)
-        return (NULL);
+	int i;
+	edict_t* targ = NULL;
+	for (i = 0;; i++)
+	{
+		if (i > globals.num_edicts)
+			return (NULL);
 
-        targ = G_Find (targ, FOFS(classname), "player");
+		targ = G_Find(targ, FOFS(classname), "player");
 
-        if (strcmp(targ->client->pers.netname, target) == 0)
-            return (targ);
-     }
+		if (strcmp(targ->client->pers.netname, target) == 0)
+			return (targ);
+	}
 }
 
 
@@ -75,14 +75,16 @@ edict_t *ent_by_name (char *target)
 // Use this function to centerprint to all players.
 // e.g. centerprint_all("---<<< FIGHT ! >>>---\n");
 
-void centerprint_all (char *msg)
+void centerprint_all(char* msg)
 {
 	int i;
-	edict_t *joe_bloggs;
+	edict_t* ent;
 
-	for_each_player(joe_bloggs,i)
+	for (i = 0; i <= maxclients->value; i++)
 	{
-		gi.centerprintf (joe_bloggs, msg);
+		ent = &g_edicts[i];
+		if (ent->inuse && ent->client)
+			gi.centerprintf(ent, msg);
 	}
 }
 
@@ -107,19 +109,21 @@ void centerprint_all (char *msg)
 // e.g. gi.centerprintf (random_player(NULL), "You're it !!!");
 // e.g. gi.centerprintf (random_player(ent), "You're it !!!");
 
-edict_t *random_player (edict_t *notme)
+edict_t* random_player(edict_t* notme)
 {
 	int i;
 	int count;
 	int random_player;
-	edict_t *joe_bloggs;
+	edict_t* ent = NULL;
 
 	// count the number of players
 	count = 0;
-	for_each_player(joe_bloggs,i)
+	for (i = 0; i <= maxclients->value; i++)
 	{
-		if (joe_bloggs != notme)
-			count++;
+		ent = &g_edicts[i];
+		if (ent->inuse && ent->client)
+			if (ent != notme)
+				count++;
 	}
 
 	// no players ?
@@ -128,24 +132,28 @@ edict_t *random_player (edict_t *notme)
 		gi.dprintf("ERROR: tried to select a random player when none are available.\n");
 		return NULL;
 	}
-	
+
 	// select a random player
 	random_player = count ? rand() % count : 0; //QW//
 //	random_player = rand() % count;
 
 	// find the randomly selected player
 	count = 0;
-	for_each_player(joe_bloggs,i)
+	for (i = 0; i <= maxclients->value; i++)
 	{
-		if (joe_bloggs != notme)
+		ent = &g_edicts[i];
+		if (ent->inuse && ent->client) 
 		{
-			if (count == random_player)
-				return joe_bloggs;
-			else
-				count++;
+			if (ent != notme)
+			{
+				if (count == random_player)
+					return ent;
+				else
+					count++;
+			}
 		}
 	}
-	return joe_bloggs;
+	return ent;
 }
 
 

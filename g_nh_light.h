@@ -1,3 +1,4 @@
+#pragma once
 //============================================================================
 // g_nh_light.h
 //
@@ -7,9 +8,9 @@
 //
 //============================================================================
 
-static qboolean stuff_light = true ;
+static qboolean stuff_light = true;
 
-qboolean toggleStuffLight() ;
-qboolean stuffLight() ;
-void getUserVar(edict_t *ent, char *var) ; 
-void checkCheating(edict_t *ent, char *userinfo) ;
+qboolean toggleStuffLight();
+qboolean stuffLight();
+void getUserVar(edict_t* ent, char* var);
+void checkCheating(edict_t* ent, char* userinfo);

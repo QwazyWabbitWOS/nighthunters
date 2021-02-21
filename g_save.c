@@ -420,6 +420,8 @@ void WriteField2(FILE* f, field_t* field, byte* base)
 			fwrite(*(char**)p, len, 1, f);
 		}
 		break;
+	default:
+		break;
 	}
 }
 
@@ -428,7 +430,8 @@ void ReadField(FILE* f, field_t* field, byte* base)
 	void* p;
 	int			len;
 	int			index;
-
+	size_t	count;
+	
 	if (field->flags & FFL_SPAWNTEMP)
 		return;
 
@@ -448,8 +451,10 @@ void ReadField(FILE* f, field_t* field, byte* base)
 			*(char**)p = NULL;
 		else
 		{
-			*(char**)p = gi.TagMalloc(len, TAG_LEVEL);
-			fread(*(char**)p, len, 1, f);
+			*(char **)p = gi.TagMalloc (len, TAG_LEVEL);
+			count = fread (*(char **)p, len, 1, f);
+			if (count)
+				; // don't worry, be happy
 		}
 		break;
 	case F_EDICT:
@@ -540,8 +545,11 @@ All pointer variables (except function pointers) must be handled specially.
 void ReadClient(FILE* f, gclient_t* client)
 {
 	field_t* field;
+	size_t	count;
 
-	fread(client, sizeof(*client), 1, f);
+	count = fread(client, sizeof(*client), 1, f);
+	if (count)
+		; // don't worry, be happy
 
 	for (field = clientfields; field->name; field++)
 	{
@@ -596,6 +604,7 @@ void ReadGame(char* filename)
 	FILE* f;
 	int		i;
 	char	str[16] = { 0 };
+	size_t	count;
 
 	gi.FreeTags(TAG_GAME);
 
@@ -605,8 +614,10 @@ void ReadGame(char* filename)
 		return; //QW// never executes
 	}
 
-	fread(str, sizeof str, 1, f);
-	if (strcmp(str, __DATE__))
+	count = fread (str, sizeof(str), 1, f);
+	if (count)
+		; // don't worry, be happy
+	if (strcmp (str, __DATE__))
 	{
 		fclose(f);
 		gi.error("Savegame from an older version.\n");
@@ -615,10 +626,10 @@ void ReadGame(char* filename)
 	g_edicts = gi.TagMalloc(game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	globals.edicts = g_edicts;
 
-	fread(&game, sizeof(game), 1, f);
-	game.clients = gi.TagMalloc(game.maxclients * sizeof(game.clients[0]), TAG_GAME);
-	for (i = 0; i < game.maxclients; i++)
-		ReadClient(f, &game.clients[i]);
+	count = fread (&game, sizeof(game), 1, f);
+	game.clients = gi.TagMalloc (game.maxclients * sizeof(game.clients[0]), TAG_GAME);
+	for (i=0 ; i<game.maxclients ; i++)
+		ReadClient (f, &game.clients[i]);
 
 	fclose(f);
 }
@@ -699,9 +710,12 @@ All pointer variables (except function pointers) must be handled specially.
 */
 void ReadEdict(FILE* f, edict_t* ent)
 {
-	field_t* field;
+	field_t		*field;
+	size_t	count;
 
-	fread(ent, sizeof(*ent), 1, f);
+	count = fread (ent, sizeof(*ent), 1, f);
+	if (count)
+		; // don't worry, be happy
 
 	for (field = fields; field->name; field++)
 	{
@@ -718,9 +732,12 @@ All pointer variables (except function pointers) must be handled specially.
 */
 void ReadLevelLocals(FILE* f)
 {
-	field_t* field;
+	field_t		*field;
+	size_t	count;
 
-	fread(&level, sizeof(level), 1, f);
+	count = fread (&level, sizeof(level), 1, f);
+	if (count)
+		; // don't worry, be happy
 
 	for (field = levelfields; field->name; field++)
 	{
@@ -737,9 +754,9 @@ WriteLevel
 void WriteLevel(char* filename)
 {
 	int		i;
-	edict_t* ent;
-	FILE* f;
-	void* base;
+	edict_t	*ent;
+	FILE	*f;
+	void	(*base)(void);
 
 	f = fopen(filename, "wb");
 	if (!f) {
@@ -751,8 +768,8 @@ void WriteLevel(char* filename)
 	fwrite(&i, sizeof(i), 1, f);
 
 	// write out a function pointer for checking
-	base = (void*)InitGame;
-	fwrite(&base, sizeof(base), 1, f);
+	base = InitGame;
+	fwrite (&base, sizeof(base), 1, f);
 
 	// write out level_locals_t
 	WriteLevelLocals(f);
@@ -794,12 +811,16 @@ void ReadLevel(char* filename)
 	int		entnum;
 	FILE* f;
 	int		i;
-	void* base;
-	edict_t* ent;
+	void	(*base)(void);
+	edict_t	*ent;
+	size_t	count;
 
 	f = fopen(filename, "rb");
 	if (!f)
-		gi.error("Couldn't open %s", filename);
+	{
+		gi.error ("Couldn't open %s", filename);
+		return;
+	}
 
 	// free any dynamic memory allocated by loading the level
 	// base state
@@ -810,24 +831,22 @@ void ReadLevel(char* filename)
 	globals.num_edicts = maxclients->value + 1;
 
 	// check edict size
-	fread(&i, sizeof(i), 1, f);
+	count = fread (&i, sizeof(i), 1, f);
 	if (i != sizeof(edict_t))
 	{
-		fclose(f);
-		gi.error("ReadLevel: mismatched edict size");
+		fclose (f);
+		gi.error ("ReadLevel: mismatched edict size");
+		return;
 	}
 
 	// check function pointer base address
-	fread(&base, sizeof(base), 1, f);
-#ifdef _WIN32
-	if (base != (void*)InitGame)
+	count = fread (&base, sizeof(base), 1, f);
+	if (base != InitGame)
 	{
-		fclose(f);
-		gi.error("ReadLevel: function pointers have moved");
+		fclose (f);
+		gi.error ("ReadLevel: function pointers have moved");
+		return;
 	}
-#else
-	gi.dprintf("Function offsets %d\n", ((byte*)base) - ((byte*)InitGame));
-#endif
 
 	// load the level locals
 	ReadLevelLocals(f);
@@ -835,7 +854,8 @@ void ReadLevel(char* filename)
 	// load all the entities
 	while (1)
 	{
-		if (fread(&entnum, sizeof(entnum), 1, f) != 1)
+		count = fread (&entnum, sizeof(entnum), 1, f);
+		if (count != 1)
 		{
 			fclose(f);
 			gi.error("ReadLevel: failed to read entnum");

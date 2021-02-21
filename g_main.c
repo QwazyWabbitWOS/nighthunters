@@ -1,5 +1,6 @@
 
 #include "g_local.h"
+#include "g_nh_light.h"
 
 game_locals_t	game;
 level_locals_t	level;
@@ -620,13 +621,16 @@ void G_RunFrame(void)
 		// New predator switching.
 		lookForPredator(NULL);
 
-		if (stuffLight()) {
-
-			for_each_player(ent, i) {
-
-				// only if using software mode check for drawflat
-				stuffcmd(ent, "set gl_dynamic 1;set sw_drawflat 0\n");
-				//			gi.cvar_forceset ("gl_dynamic", "1");
+		if (stuffLight()) 
+		{
+			for (i = 0; i <= maxclients->value; i++)
+			{
+				ent = &g_edicts[i];
+				if (ent->inuse && ent->client) {
+					// only if using software mode check for drawflat
+					stuffcmd(ent, "set gl_dynamic 1;set sw_drawflat 0\n");
+					// gi.cvar_forceset ("gl_dynamic", "1");
+				}
 			}
 		}
 

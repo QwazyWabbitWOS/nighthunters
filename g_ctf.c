@@ -201,7 +201,7 @@ void CTFSay_Team_Location(edict_t* who, char* buf)
 	int hotindex = 999;
 	int i;
 	gitem_t* item;
-	int nearteam = -1;
+	//int nearteam = -1; //QW// Unused.
 	//edict_t *flag1, *flag2; //QW// Unused.
 	qboolean hotsee = false;
 	qboolean cansee;

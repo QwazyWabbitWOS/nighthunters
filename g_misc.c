@@ -38,14 +38,14 @@ Misc functions
 */
 void VelocityForDamage (int damage, vec3_t v)
 {
-	v[0] = 100.0 * crandom();
-	v[1] = 100.0 * crandom();
-	v[2] = 200.0 + 100.0 * random();
+	v[0] = 100.0f * crandom();
+	v[1] = 100.0f * crandom();
+	v[2] = 200.0f + 100.0f * random();
 
 	if (damage < 50)
-		VectorScale (v, 0.7, v);
+		VectorScale (v, 0.7f, v);
 	else 
-		VectorScale (v, 1.2, v);
+		VectorScale (v, 1.2f, v);
 }
 
 void ClipGibVelocity (edict_t *ent)
@@ -465,7 +465,7 @@ void SP_point_combat (edict_t *self)
 	VectorSet (self->maxs, 8, 8, 16);
 	self->svflags = SVF_NOCLIENT;
 	gi.linkentity (self);
-};
+}
 
 
 /*QUAKED viewthing (0 .5 .8) (-8 -8 -8) (8 8 8)
@@ -500,7 +500,7 @@ Used as a positional target for spotlights, etc.
 void SP_info_null (edict_t *self)
 {
 	G_FreeEdict (self);
-};
+}
 
 
 /*QUAKED info_notnull (0 0.5 0) (-4 -4 -4) (4 4 4)
@@ -510,7 +510,7 @@ void SP_info_notnull (edict_t *self)
 {
 	VectorCopy (self->s.origin, self->absmin);
 	VectorCopy (self->s.origin, self->absmax);
-};
+}
 
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) START_OFF
@@ -748,7 +748,7 @@ void func_explosive_explode (edict_t *self, edict_t *inflictor, edict_t *attacke
 	// start chunks towards the center
 	VectorScale (size, 0.5, size);
 
-	mass = self->mass;
+	mass = (int) self->mass;
 	if (!mass)
 		mass = 75;
 
@@ -1557,8 +1557,9 @@ void SP_target_character (edict_t *self)
 
 void target_string_use (edict_t *self, edict_t *other, edict_t *activator)
 {
-	edict_t *e;
-	int		n, l;
+	edict_t	*e;
+	int		n;
+	int		l;
 	char	c;
 
 	l = strlen(self->message);
@@ -1617,11 +1618,11 @@ static void func_clock_reset (edict_t *self)
 	if (self->spawnflags & 1)
 	{
 		self->health = 0;
-		self->wait = self->count;
+		self->wait = (float) self->count;
 	}
 	else if (self->spawnflags & 2)
 	{
-		self->health = self->count;
+		self->health = (int) self->count;
 		self->wait = 0;
 	}
 }
@@ -1679,11 +1680,8 @@ void func_clock_think (edict_t *self)
 
 		time(&gmtime);
 		ltime = localtime(&gmtime);
-		Com_sprintf (self->message, CLOCK_MESSAGE_SIZE, "%2i:%2i:%2i", ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
-		if (self->message[3] == ' ')
-			self->message[3] = '0';
-		if (self->message[6] == ' ')
-			self->message[6] = '0';
+		Com_sprintf (self->message, CLOCK_MESSAGE_SIZE, 
+			"%02i:%02i:%02i", ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
 	}
 
 	self->enemy->message = self->message;
@@ -1794,7 +1792,7 @@ void teleporter_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_
 	// set angles
 	for (i=0 ; i<3 ; i++)
 	{
-		other->client->ps.pmove.delta_angles[i] = ANGLE2SHORT(dest->s.angles[i] - other->client->resp.cmd_angles[i]);
+		other->client->ps.pmove.delta_angles[i] = (short) ANGLE2SHORT(dest->s.angles[i] - other->client->resp.cmd_angles[i]);
 	}
 
 	VectorClear (other->s.angles);

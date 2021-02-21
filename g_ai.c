@@ -335,7 +335,7 @@ void FoundTarget (edict_t *self)
 		level.sight_entity->light_level = 128;
 	}
 
-	self->show_hostile = level.time + 1;		// wake up other monsters
+	self->show_hostile = level.time + 1.0f;		// wake up other monsters
 
 	VectorCopy(self->enemy->s.origin, self->monsterinfo.last_sighting);
 	self->monsterinfo.trail_time = level.time;
@@ -631,19 +631,19 @@ qboolean M_CheckAttack (edict_t *self)
 
 	if (self->monsterinfo.aiflags & AI_STAND_GROUND)
 	{
-		chance = 0.4;
+		chance = 0.4f;
 	}
 	else if (enemy_range == RANGE_MELEE)
 	{
-		chance = 0.2;
+		chance = 0.2f;
 	}
 	else if (enemy_range == RANGE_NEAR)
 	{
-		chance = 0.1;
+		chance = 0.1f;
 	}
 	else if (enemy_range == RANGE_MID)
 	{
-		chance = 0.02;
+		chance = 0.02f;
 	}
 	else
 	{
@@ -653,7 +653,7 @@ qboolean M_CheckAttack (edict_t *self)
 	if (skill->value == 0)
 		chance *= 0.5;
 	else if (skill->value >= 2)
-		chance *= 2;
+		chance *= 2.0;
 
 	if (random () < chance)
 	{
@@ -711,7 +711,7 @@ void ai_run_missile(edict_t *self)
 		self->monsterinfo.attack (self);
 		self->monsterinfo.attack_state = AS_STRAIGHT;
 	}
-};
+}
 
 
 /*
@@ -765,10 +765,12 @@ qboolean ai_checkattack (edict_t *self, float dist)
 			if ((level.time - self->enemy->teleport_time) > 5.0f)
 			{
 				if (self->goalentity == self->enemy)
-					if (self->movetarget)
-						self->goalentity = self->movetarget;
+				{
+                    if (self->movetarget)
+					    self->goalentity = self->movetarget;
 					else
-						self->goalentity = NULL;
+					    self->goalentity = NULL;
+				}
 				self->monsterinfo.aiflags &= ~AI_SOUND_TARGET;
 				if (self->monsterinfo.aiflags & AI_TEMP_STAND_GROUND)
 					self->monsterinfo.aiflags &= ~(AI_STAND_GROUND | AI_TEMP_STAND_GROUND);
@@ -832,7 +834,7 @@ qboolean ai_checkattack (edict_t *self, float dist)
 			{
 				// we need the pausetime otherwise the stand code
 				// will just revert to walking with no target and
-				// the monsters will wonder around aimlessly trying
+				// the monsters will wander around aimlessly trying
 				// to hunt the world entity
 				self->monsterinfo.pausetime = level.time + 100000000;
 				self->monsterinfo.stand (self);
@@ -897,7 +899,7 @@ void ai_run (edict_t *self, float dist)
 	vec3_t		v;
 	edict_t		*tempgoal;
 	edict_t		*save;
-	qboolean	new;
+	qboolean	bnew;
 	edict_t		*marker;
 	float		d1, d2;
 	trace_t		tr;
@@ -943,9 +945,12 @@ void ai_run (edict_t *self, float dist)
 //			dprint("regained sight\n");
 		M_MoveToGoal (self, dist);
 		self->monsterinfo.aiflags &= ~AI_LOST_SIGHT;
-		VectorCopy (self->enemy->s.origin, self->monsterinfo.last_sighting);
-		self->monsterinfo.trail_time = level.time;
-		return;
+		if (self->enemy != NULL) //QW// fix null pointer exception
+		{
+			VectorCopy (self->enemy->s.origin, self->monsterinfo.last_sighting);
+			self->monsterinfo.trail_time = level.time;
+			return;
+		}
 	}
 
 	// coop will change to another enemy if visible
@@ -967,7 +972,7 @@ void ai_run (edict_t *self, float dist)
 	tempgoal = G_Spawn();
 	self->goalentity = tempgoal;
 
-	new = false;
+	bnew = false;
 
 	if (!(self->monsterinfo.aiflags & AI_LOST_SIGHT))
 	{
@@ -975,7 +980,7 @@ void ai_run (edict_t *self, float dist)
 //		dprint("lost sight of player, last seen at "); dprint(vtos(self.last_sighting)); dprint("\n");
 		self->monsterinfo.aiflags |= (AI_LOST_SIGHT | AI_PURSUIT_LAST_SEEN);
 		self->monsterinfo.aiflags &= ~(AI_PURSUE_NEXT | AI_PURSUE_TEMP);
-		new = true;
+		bnew = true;
 	}
 
 	if (self->monsterinfo.aiflags & AI_PURSUE_NEXT)
@@ -992,7 +997,7 @@ void ai_run (edict_t *self, float dist)
 			self->monsterinfo.aiflags &= ~AI_PURSUE_TEMP;
 			marker = NULL;
 			VectorCopy (self->monsterinfo.saved_goal, self->monsterinfo.last_sighting);
-			new = true;
+			bnew = true;
 		}
 		else if (self->monsterinfo.aiflags & AI_PURSUIT_LAST_SEEN)
 		{
@@ -1012,7 +1017,7 @@ void ai_run (edict_t *self, float dist)
 //			dprint("heading is "); dprint(ftos(self.ideal_yaw)); dprint("\n");
 
 //			debug_drawline(self.origin, self.last_sighting, 52);
-			new = true;
+			bnew = true;
 		}
 	}
 
@@ -1026,7 +1031,7 @@ void ai_run (edict_t *self, float dist)
 
 	VectorCopy (self->monsterinfo.last_sighting, self->goalentity->s.origin);
 
-	if (new)
+	if (bnew)
 	{
 //		gi.dprintf("checking for course correction\n");
 
@@ -1055,7 +1060,7 @@ void ai_run (edict_t *self, float dist)
 			{
 				if (left < 1)
 				{
-					VectorSet(v, d2 * left * 0.5, -16, 0);
+					VectorSet(v, d2 * left * 0.5f, -16, 0);
 					G_ProjectSource (self->s.origin, v, v_forward, v_right, left_target);
 //					gi.dprintf("incomplete path, go part way and adjust again\n");
 				}
@@ -1072,7 +1077,7 @@ void ai_run (edict_t *self, float dist)
 			{
 				if (right < 1)
 				{
-					VectorSet(v, d2 * right * 0.5, 16, 0);
+					VectorSet(v, d2 * right * 0.5f, 16, 0);
 					G_ProjectSource (self->s.origin, v, v_forward, v_right, right_target);
 //					gi.dprintf("incomplete path, go part way and adjust again\n");
 				}

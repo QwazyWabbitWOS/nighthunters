@@ -116,10 +116,11 @@ void Lightning_Off(void) {
 
 		break;
 	}
-	for_each_player(ent, i) {
-		gi.sound(ent, CHAN_AUTO,
-			gi.soundindex(sound), 1, ATTN_STATIC, 0);
+
+	for (i = 0; i <= maxclients->value; i++)
+	{
+		ent = &g_edicts[i];
+		if (ent->inuse && ent->client)
+			gi.sound(ent, CHAN_AUTO, gi.soundindex(sound), 1, ATTN_STATIC, 0);
 	}
-
-
 }

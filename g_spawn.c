@@ -413,6 +413,8 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 				break;
 			case F_IGNORE:
 				break;
+			default:
+				break;
 			}
 			return;
 		}
@@ -574,13 +576,15 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 		com_token = COM_Parse (&entities);
 		if (!entities)
 			break;
-		if (com_token[0] != '{')
-			gi.error ("ED_LoadFromFile: found %s when expecting {",com_token);
-
+		if (com_token[0] != '{') {
+			gi.error("ED_LoadFromFile: found %s when expecting {", com_token);
+			return; //QW// never executes.
+		}
 		if (!ent)
 			ent = g_edicts;
 		else
 			ent = G_Spawn ();
+
 		entities = ED_ParseEdict (entities, ent);
 
 		// yet another map hack

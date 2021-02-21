@@ -29,7 +29,6 @@ _CrtMemState startup1;	// memory diagnostics
 #include "p_nhhud.h" // NH changes: Custom hud.
 #include "g_safety.h" // NH changes: safety mode.
 #include "q_model.h" // NH changes: Configurable predator model
-#include "g_nh_light.h" // NH changes: Light detection and enforcement.
 #include "p_predator.h" // NH changes: Predator functions.
 #include "g_nh.h" // NH changes: NH relator client functions.
 #include "p_motd.h" // NH changes: MOTD functions. 

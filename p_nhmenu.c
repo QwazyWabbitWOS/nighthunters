@@ -256,7 +256,8 @@ void ShowNHInfoMenu(edict_t* ent, pmenu_t* p)
 	int i = 0;
 	FILE* motd_file;
 
-	if (motd_file = fopen("nhunters/info.txt", "r"))
+	motd_file = fopen("nhunters/info.txt", "r");
+	if (motd_file)
 	{
 		// we successfully opened the file "motd.txt"
 		if (fgets(motd, 500, motd_file))
@@ -282,7 +283,7 @@ void ShowNHInfoMenu(edict_t* ent, pmenu_t* p)
 	{
 		// can't find motd.txt file, so fill with null..
 		i = 0;
-		while (i <= 20)
+		while (i < 20)
 		{
 			NHInfoMenu[i].text = NULL;
 			NHInfoMenu[i].align = PMENU_ALIGN_CENTER;
@@ -378,7 +379,7 @@ void ShowNHModelsMenu(edict_t* ent, pmenu_t* p)
 	NHModelsMenu[i].arg = NULL;
 	NHModelsMenu[i].SelectFunc = NULL;
 	i++;
-	NHModelsMenu[i].text = strdup(getPredatorModel());
+	NHModelsMenu[i].text = predator_model->string;
 	NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
 	NHModelsMenu[i].arg = NULL;
 	NHModelsMenu[i].SelectFunc = NULL;
@@ -400,7 +401,7 @@ void ShowNHModelsMenu(edict_t* ent, pmenu_t* p)
 		NHModelsMenu[i].arg = NULL;
 		NHModelsMenu[i].SelectFunc = NULL;
 		i++;
-		NHModelsMenu[i].text = strdup(getMarineModel());
+		NHModelsMenu[i].text = marine_model->string;
 		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
 		NHModelsMenu[i].arg = NULL;
 		NHModelsMenu[i].SelectFunc = NULL;
@@ -418,7 +419,7 @@ void ShowNHModelsMenu(edict_t* ent, pmenu_t* p)
 		NHModelsMenu[i].arg = NULL;
 		NHModelsMenu[i].SelectFunc = NULL;
 		i++;
-		NHModelsMenu[i].text = strdup(getPredatorModel());
+		NHModelsMenu[i].text = predator_model->string;
 		NHModelsMenu[i].align = PMENU_ALIGN_CENTER;
 		NHModelsMenu[i].arg = NULL;
 		NHModelsMenu[i].SelectFunc = NULL;

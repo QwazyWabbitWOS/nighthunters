@@ -9,6 +9,8 @@ vec3_t vec3_origin = {0,0,0};
 
 #ifdef _WIN32
 #pragma optimize( "", off )
+#pragma warning (push)
+#pragma warning (disable:4748)
 #endif
 
 void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, float degrees )
@@ -67,6 +69,7 @@ void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, 
 }
 
 #ifdef _WIN32
+#pragma warning(pop)
 #pragma optimize( "", on )
 #endif
 
@@ -229,33 +232,6 @@ void R_ConcatTransforms (float in1[3][4], float in2[3][4], float out[3][4])
 
 //============================================================================
 
-
-float Q_fabs (float f)
-{
-#if 0
-	if (f >= 0)
-		return f;
-	return -f;
-#else
-	int tmp = * ( int * ) &f;
-	tmp &= 0x7FFFFFFF;
-	return * ( float * ) &tmp;
-#endif
-}
-
-#if defined _M_IX86 && !defined C_ONLY
-#pragma warning (disable:4035)
-__declspec( naked ) long Q_ftol( float f )
-{
-	static int tmp;
-	__asm fld dword ptr [esp+4]
-	__asm fistp tmp
-	__asm mov eax, tmp
-	__asm ret
-}
-#pragma warning (default:4035)
-#endif
-
 /*
 ===============
 LerpAngle
@@ -284,9 +260,6 @@ float	anglemod(float a)
 	return a;
 }
 
-	int		i;
-	vec3_t	corners[2];
-
 
 // this is the slow, general version
 int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
@@ -294,7 +267,7 @@ int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 	int		i;
 	float	dist1, dist2;
 	int		sides;
-	vec3_t	corners[2];
+	vec3_t	corners[2] = { 0 };
 
 	for (i=0 ; i<3 ; i++)
 	{
@@ -654,8 +627,8 @@ void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 int VectorCompare (vec3_t v1, vec3_t v2)
 {
 	if (v1[0] != v2[0] || v1[1] != v2[1] || v1[2] != v2[2])
-			return 0;
-			
+		return 0;
+
 	return 1;
 }
 
@@ -665,7 +638,7 @@ vec_t VectorNormalize (vec3_t v)
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);
 
 	if (length)
 	{
@@ -674,9 +647,8 @@ vec_t VectorNormalize (vec3_t v)
 		v[1] *= ilength;
 		v[2] *= ilength;
 	}
-		
-	return length;
 
+	return length;
 }
 
 vec_t VectorNormalize2 (vec3_t v, vec3_t out)
@@ -684,7 +656,7 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);
 
 	if (length)
 	{
@@ -693,9 +665,8 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 		out[1] = v[1]*ilength;
 		out[2] = v[2]*ilength;
 	}
-		
-	return length;
 
+	return length;
 }
 
 void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
@@ -706,6 +677,8 @@ void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 }
 
 
+/* return the dot product v1 . v2 */
+/* note the dot product of two vectors is a scalar */
 vec_t _DotProduct (vec3_t v1, vec3_t v2)
 {
 	return v1[0]*v2[0] + v1[1]*v2[1] + v1[2]*v2[2];
@@ -743,11 +716,11 @@ vec_t VectorLength(vec3_t v)
 {
 	int		i;
 	float	length;
-	
+
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);
 
 	return length;
 }
@@ -787,11 +760,11 @@ COM_SkipPath
 char *COM_SkipPath (char *pathname)
 {
 	char	*last;
-	
+
 	last = pathname;
 	while (*pathname)
 	{
-		if (*pathname=='/')
+		if (*pathname == '/')
 			last = pathname+1;
 		pathname++;
 	}
@@ -817,7 +790,7 @@ COM_FileExtension
 */
 char *COM_FileExtension (char *in)
 {
-	static char exten[8];
+	static char exten[8] = { 0 };
 	int		i;
 
 	while (*in && *in != '.')
@@ -887,10 +860,10 @@ COM_DefaultExtension
 void COM_DefaultExtension (char *path, char *extension)
 {
 	char    *src;
-//
-// if path doesn't have a .EXT, append extension
-// (extension should include the .)
-//
+	//
+	// if path doesn't have a .EXT, append extension
+	// (extension should include the .)
+	//
 	src = path + strlen(path) - 1;
 
 	while (*src != '/' && src != path)
@@ -902,121 +875,6 @@ void COM_DefaultExtension (char *path, char *extension)
 
 	strcat (path, extension);
 }
-
-/*
-============================================================================
-
-					BYTE ORDER FUNCTIONS
-
-============================================================================
-*/
-
-qboolean	bigendien;
-
-// can't just use function pointers, or dll linkage can
-// mess up when qcommon is included in multiple places
-short	(*_BigShort) (short l);
-short	(*_LittleShort) (short l);
-int		(*_BigLong) (int l);
-int		(*_LittleLong) (int l);
-float	(*_BigFloat) (float l);
-float	(*_LittleFloat) (float l);
-
-short	BigShort(short l){return _BigShort(l);}
-short	LittleShort(short l) {return _LittleShort(l);}
-int		BigLong (int l) {return _BigLong(l);}
-int		LittleLong (int l) {return _LittleLong(l);}
-float	BigFloat (float l) {return _BigFloat(l);}
-float	LittleFloat (float l) {return _LittleFloat(l);}
-
-short   ShortSwap (short l)
-{
-	byte    b1,b2;
-
-	b1 = l&255;
-	b2 = (l>>8)&255;
-
-	return (b1<<8) + b2;
-}
-
-short	ShortNoSwap (short l)
-{
-	return l;
-}
-
-int    LongSwap (int l)
-{
-	byte    b1,b2,b3,b4;
-
-	b1 = l&255;
-	b2 = (l>>8)&255;
-	b3 = (l>>16)&255;
-	b4 = (l>>24)&255;
-
-	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
-}
-
-int	LongNoSwap (int l)
-{
-	return l;
-}
-
-float FloatSwap (float f)
-{
-	union
-	{
-		float	f;
-		byte	b[4];
-	} dat1, dat2;
-	
-	
-	dat1.f = f;
-	dat2.b[0] = dat1.b[3];
-	dat2.b[1] = dat1.b[2];
-	dat2.b[2] = dat1.b[1];
-	dat2.b[3] = dat1.b[0];
-	return dat2.f;
-}
-
-float FloatNoSwap (float f)
-{
-	return f;
-}
-
-/*
-================
-Swap_Init
-================
-*/
-void Swap_Init (void)
-{
-	byte	swaptest[2] = {1,0};
-
-// set the byte swapping variables in a portable manner	
-	if ( *(short *)swaptest == 1)
-	{
-		bigendien = false;
-		_BigShort = ShortSwap;
-		_LittleShort = ShortNoSwap;
-		_BigLong = LongSwap;
-		_LittleLong = LongNoSwap;
-		_BigFloat = FloatSwap;
-		_LittleFloat = FloatNoSwap;
-	}
-	else
-	{
-		bigendien = true;
-		_BigShort = ShortNoSwap;
-		_LittleShort = ShortSwap;
-		_BigLong = LongNoSwap;
-		_LittleLong = LongSwap;
-		_BigFloat = FloatNoSwap;
-		_LittleFloat = FloatSwap;
-	}
-
-}
-
-
 
 /*
 ============
@@ -1031,9 +889,9 @@ char	*va(char *format, ...)
 {
 	va_list		argptr;
 	static char		string[1024];
-	
+
 	va_start (argptr, format);
-	vsprintf (string, format,argptr);
+	vsprintf (string, format, argptr);
 	va_end (argptr);
 
 	return string;	
@@ -1058,14 +916,14 @@ char *COM_Parse (char **data_p)
 	data = *data_p;
 	len = 0;
 	com_token[0] = 0;
-	
+
 	if (!data)
 	{
 		*data_p = NULL;
 		return "";
 	}
-		
-// skip whitespace
+
+	// skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
 	{
@@ -1076,27 +934,27 @@ skipwhite:
 		}
 		data++;
 	}
-	
-// skip // comments
-	if (c=='/' && data[1] == '/')
+
+	// skip // comments
+	if (c == '/' && data[1] == '/')
 	{
 		while (*data && *data != '\n')
 			data++;
 		goto skipwhite;
 	}
 
-// handle quoted strings specially
+
+	// handle quoted strings specially
 	if (c == '\"')
 	{
 		data++;
 		while (1)
 		{
 			c = *data++;
-			if (c=='\"' || !c)
+			if (c == '\"' || !c)
 			{
-				com_token[len] = 0;
-				*data_p = data;
-				return com_token;
+				//bugfix from skuller
+				goto finish;
 			}
 			if (len < MAX_TOKEN_CHARS)
 			{
@@ -1106,7 +964,7 @@ skipwhite:
 		}
 	}
 
-// parse a regular word
+	// parse a regular word
 	do
 	{
 		if (len < MAX_TOKEN_CHARS)
@@ -1118,9 +976,11 @@ skipwhite:
 		c = *data;
 	} while (c>32);
 
+finish:
+
 	if (len == MAX_TOKEN_CHARS)
 	{
-//		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
+		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
 		len = 0;
 	}
 	com_token[len] = 0;
@@ -1133,7 +993,6 @@ skipwhite:
 /*
 ===============
 Com_PageInMemory
-
 ===============
 */
 int	paged_total;
@@ -1156,16 +1015,21 @@ void Com_PageInMemory (byte *buffer, int size)
 ============================================================================
 */
 
-// FIXME: replace all Q_stricmp with Q_strcasecmp
-int Q_stricmp (char *s1, char *s2)
+/** Case independent string compare.
+ If s1 is contained within s2 then return 0, they are "equal".
+ else return the lexicographic difference between them.
+*/
+int Q_stricmp(const char* s1, const char* s2)
 {
-#if defined(_WIN32)
-	return _stricmp (s1, s2);
-#else
-	return strcasecmp (s1, s2);
-#endif
-}
+	const unsigned char
+		* uc1 = (const unsigned char*)s1,
+		* uc2 = (const unsigned char*)s2;
 
+	while (tolower(*uc1) == tolower(*uc2++))
+		if (*uc1++ == '\0')
+			return (0);
+	return (tolower(*uc1) - tolower(*--uc2));
+}
 
 int Q_strncasecmp (char *s1, char *s2, int n)
 {
@@ -1198,8 +1062,7 @@ int Q_strcasecmp (char *s1, char *s2)
 	return Q_strncasecmp (s1, s2, 99999);
 }
 
-static char	bigbuffer[0x10000]; //QW// for Com_sprintf
-
+static	char	bigbuffer[0x10000]; // for Com_Sprintf
 
 void Com_sprintf (char *dest, int size, char *fmt, ...)
 {
@@ -1243,6 +1106,7 @@ size_t Q_strncpyz(char* dst, size_t dstSize, const char* src)
 		return (s - src - 1);    // returned count excludes NULL terminator
 }
 
+
 size_t Q_strncatz(char* dst, size_t dstSize, const char* src)
 {
 	char* d = dst;
@@ -1275,7 +1139,7 @@ size_t Q_strncatz(char* dst, size_t dstSize, const char* src)
 /*
 =====================================================================
 
-  INFO STRINGS
+                          INFO STRINGS
 
 =====================================================================
 */
@@ -1290,12 +1154,11 @@ key and returns the associated value, or an empty string.
 */
 char *Info_ValueForKey (char *s, char *key)
 {
-	char	pkey[512];
-	static	char value[2][512];	// use two buffers so compares
-								// work without stomping on each other
+	char	pkey[512] = {0};
+	static	char value[2][MAX_INFO_STRING]; // Use two buffers so compares work without stomping on each other.
 	static	int	valueindex;
 	char	*o;
-	
+
 	valueindex ^= 1;
 	if (*s == '\\')
 		s++;
@@ -1333,8 +1196,8 @@ char *Info_ValueForKey (char *s, char *key)
 void Info_RemoveKey (char *s, char *key)
 {
 	char	*start;
-	char	pkey[512];
-	char	value[512];
+	char	pkey[512] = {0};
+	char	value[512] = {0};
 	char	*o;
 
 	if (strstr (key, "\\"))
@@ -1355,7 +1218,7 @@ void Info_RemoveKey (char *s, char *key)
 				return;
 			*o++ = *s++;
 		}
-		*o = 0;
+		*o = '\0';
 		s++;
 
 		o = value;
@@ -1365,18 +1228,21 @@ void Info_RemoveKey (char *s, char *key)
 				return;
 			*o++ = *s++;
 		}
-		*o = 0;
+		*o = '\0';
 
 		if (!strcmp (key, pkey) )
 		{
-			strcpy (start, s);	// remove this part
+			size_t memlen;
+
+			memlen = strlen(s);
+			memmove (start, s, memlen);
+			*(start+memlen) = 0;
 			return;
 		}
 
 		if (!*s)
 			return;
 	}
-
 }
 
 
@@ -1426,6 +1292,7 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 		Com_Printf ("Keys and values must be < 64 characters.\n");
 		return;
 	}
+
 	Info_RemoveKey (s, key);
 	if (!value || !strlen(value))
 		return;
@@ -1434,7 +1301,7 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 
 	if (strlen(newi) + strlen(s) > maxsize)
 	{
-		Com_Printf ("Info string length exceeded\n");
+		Com_Printf ("Info string length exceeded: \"%s\" value: \"%s\"\n", key, value);
 		return;
 	}
 

@@ -19,79 +19,79 @@
 #define fl self->flashlight
 
 //majoon: This one clears the Flashlight variable
-void ClearFlashlight(edict_t *self) {
+void ClearFlashlight(edict_t* self) {
 
-   if ( fl ) {
-      G_FreeEdict(fl);
-      fl = NULL;
+	if (fl) {
+		G_FreeEdict(fl);
+		fl = NULL;
 
-      // self->client->ps.stats[STAT_HELPICON] = 0; // Alex
+		// self->client->ps.stats[STAT_HELPICON] = 0; // Alex
 
-      return;
-      
-   }
+		return;
+
+	}
 }
 
-void SP_Flashlight(edict_t *self) {
+void SP_Flashlight(edict_t* self) {
 
-   vec3_t  start,forward,right,end;
+	vec3_t  start, forward, right, end;
 
-   //***** Spectator *****
-   if (self->inWaiting || self->isObserving)
-	   return;
+	//***** Spectator *****
+	if (self->inWaiting || self->isObserving)
+		return;
 
-   // Also don't allow this if dead.
-   if (self->deadflag)
-     return ;
+	// Also don't allow this if dead.
+	if (self->deadflag)
+		return;
 
-   if ( fl ) {
-      G_FreeEdict(fl);
-      fl = NULL;
+	if (fl) {
+		G_FreeEdict(fl);
+		fl = NULL;
 
-      // Bruce: Reworked this a little
-      if (!self->isPredator) 
-	gi.sound(self, CHAN_VOICE,
-		 gi.soundindex("world/spark1.wav"), 1, ATTN_NORM, 0);
+		// Bruce: Reworked this a little
+		if (!self->isPredator)
+			gi.sound(self, CHAN_VOICE,
+				gi.soundindex("world/spark1.wav"), 1, ATTN_NORM, 0);
 
-      // Turn flashlight off
-      //self->client->ps.stats[STAT_HELPICON] = 0; // Alex
+		// Turn flashlight off
+		//self->client->ps.stats[STAT_HELPICON] = 0; // Alex
 
-      return;
-   }
+		return;
+	}
 
-   // Bruce: Reworked this too
-   if (!self->isPredator) 
-	gi.sound(self, CHAN_VOICE,
-		 gi.soundindex("world/spark3.wav"), 1, ATTN_NORM, 0);
+	// Bruce: Reworked this too
+	if (!self->isPredator)
+		gi.sound(self, CHAN_VOICE,
+			gi.soundindex("world/spark3.wav"), 1, ATTN_NORM, 0);
 
-   // Flashlight on.
-   //   self->client->ps.stats[STAT_NHFLASHLIGHT] = gi.imageindex ("nhflash");
+	// Flashlight on.
+	//   self->client->ps.stats[STAT_NHFLASHLIGHT] = gi.imageindex ("nhflash");
 
-   AngleVectors (self->client->v_angle, forward, right, NULL);
+	AngleVectors(self->client->v_angle, forward, right, NULL);
 
-   VectorSet(end,100 , 0, 0);
-   G_ProjectSource (self->s.origin, end, forward, right, start);
+	VectorSet(end, 100, 0, 0);
+	G_ProjectSource(self->s.origin, end, forward, right, start);
 
-   fl = G_Spawn ();
-   fl->owner = self;
-   fl->movetype = MOVETYPE_NOCLIP;
-   fl->solid = SOLID_NOT;
-   fl->classname = "flashlight";
-   fl->s.modelindex = gi.modelindex ("sprites/s_bubble.sp2");
-   fl->s.skinnum = 0;
-   if (self->isPredator) {
-	fl->s.effects = EF_FLAG2;
-//     fl->s.effects |= EF_BLUEHYPERBLASTER;
-   }   
-   else
-//     fl->s.effects |= EF_TAGTRAIL;
-     fl->s.effects |= EF_BFG;
+	fl = G_Spawn();
+	fl->owner = self;
+	fl->movetype = MOVETYPE_NOCLIP;
+	fl->solid = SOLID_NOT;
+	fl->classname = "flashlight";
+	fl->s.modelindex = gi.modelindex("sprites/s_bubble.sp2");
+	fl->s.skinnum = 0;
+	if (self->isPredator) {
+		fl->s.effects = EF_FLAG2;
+		//     fl->s.effects |= EF_BLUEHYPERBLASTER;
+	}
+	else
+		//     fl->s.effects |= EF_TAGTRAIL;
+		fl->s.effects |= EF_BFG;
 
-   fl->s.renderfx |= RF_TRANSLUCENT;
-   fl->s.renderfx |= RF_FULLBRIGHT;
+	fl->s.renderfx |= RF_TRANSLUCENT;
+	fl->s.renderfx |= RF_FULLBRIGHT;
 
-   fl->think = FlashlightThink;
-   fl->nextthink = level.time + 0.1;
+	fl->think = FlashlightThink;
+	fl->nextthink = level.time + 0.1;
 }
 
 
@@ -102,45 +102,45 @@ void SP_Flashlight(edict_t *self) {
   <self> is the lasersight entity
 ---------------------------------------------*/
 
-void FlashlightThink (edict_t *self)
+void FlashlightThink(edict_t* self)
 {
-   vec3_t start,end,endp,offset;
-   vec3_t forward,right,up;
-   trace_t tr;
+	vec3_t start, end, endp, offset;
+	vec3_t forward, right, up;
+	trace_t tr;
 
-   AngleVectors (self->owner->client->v_angle, forward, right, up);
+	AngleVectors(self->owner->client->v_angle, forward, right, up);
 
-   VectorSet(offset,24 , 6, self->owner->viewheight-7);
-   G_ProjectSource (self->owner->s.origin, offset, forward, right, start);
-   VectorMA(start,8192,forward,end);
+	VectorSet(offset, 24, 6, self->owner->viewheight - 7);
+	G_ProjectSource(self->owner->s.origin, offset, forward, right, start);
+	VectorMA(start, 8192, forward, end);
 
-   tr = gi.trace (start,NULL,NULL, end,self->owner,CONTENTS_SOLID|CONTENTS_MONSTER|CONTENTS_DEADMONSTER);
+	tr = gi.trace(start, NULL, NULL, end, self->owner, CONTENTS_SOLID | CONTENTS_MONSTER | CONTENTS_DEADMONSTER);
 
-   if (tr.fraction != 1) {
-      VectorMA(tr.endpos,-4,forward,endp);
-      VectorCopy(endp,tr.endpos);
-   }
+	if (tr.fraction != 1) {
+		VectorMA(tr.endpos, -4, forward, endp);
+		VectorCopy(endp, tr.endpos);
+	}
 
-   if ((tr.ent->svflags & SVF_MONSTER) || (tr.ent->client)){
-      if ((tr.ent->takedamage) && (tr.ent != self->owner)) {
-         self->s.skinnum = 1;
-      }
-   }
-   else
-      self->s.skinnum = 0;
+	if ((tr.ent->svflags & SVF_MONSTER) || (tr.ent->client)) {
+		if ((tr.ent->takedamage) && (tr.ent != self->owner)) {
+			self->s.skinnum = 1;
+		}
+	}
+	else
+		self->s.skinnum = 0;
 
-   vectoangles(tr.plane.normal,self->s.angles);
-   VectorCopy(tr.endpos,self->s.origin);
+	vectoangles(tr.plane.normal, self->s.angles);
+	VectorCopy(tr.endpos, self->s.origin);
 
-   gi.linkentity (self);
-   self->nextthink = level.time + 0.1;
+	gi.linkentity(self);
+	self->nextthink = level.time + 0.1;
 }
 
 //majoon: The player will glow a tad, if he's using the flashlight, as to
 //not give an unfair advantage!
 //Oooooor, the predator is partially transparent and does NOT glow when
 //using the flashlight (or, in his case, the light scope)
-void playerEffects (edict_t *player)
+void playerEffects(edict_t* player)
 {
 	//if (player->inWaiting)
 	//	player->s.effects = EF_FLAG2;
@@ -157,14 +157,14 @@ Cmd_ShowInfo_f
 Display the current info
 ==================
 */
-void Cmd_ShowInfo_f (edict_t *ent)
+void Cmd_ShowInfo_f(edict_t* ent)
 {
 	ent->client->showinventory = false;
 	ent->client->showscores = false;
 
 	//ent->client->showhelp = true;
 	//ent->client->resp.helpchanged = 0;
-	InfoComputer (ent);
+	InfoComputer(ent);
 }
 
 /*
@@ -174,19 +174,19 @@ InfoComputer
 Draw info computer.
 ==================
 */
-void InfoComputer (edict_t *ent)
+void InfoComputer(edict_t* ent)
 {
 	char	string[1024];
 
 	// send the layout
-	Com_sprintf (string, sizeof(string),
+	Com_sprintf(string, sizeof(string),
 		"xv 32 yv 8 picn help "		// background
 //		"xv 202 yv 12 cstring2 \"Hello!!\" "		// skill
-		/*and the end*/ );
+/*and the end*/);
 
-	gi.WriteByte (svc_layout);
-	gi.WriteString (string);
-	gi.unicast (ent, true);
+	gi.WriteByte(svc_layout);
+	gi.WriteString(string);
+	gi.unicast(ent, true);
 }
 
 
@@ -199,32 +199,33 @@ that might be nice to put
 in when somone first connects.
 ===================
 */
-void onPlayerConnect (edict_t *newplayer)
+void onPlayerConnect(edict_t* newplayer)
 {
-		FILE *motd_file;
-		char motd[500] = { 0 };
-		char line[80] = { 0 };
+	FILE* motd_file;
+	char motd[500] = { 0 };
+	char line[80] = { 0 };
 
-	if (motd_file = fopen("nhunters/motd.txt", "r"))
+	motd_file = fopen("nhunters/motd.txt", "r");
+	if (motd_file)
 	{
 		// we successfully opened the file "motd.txt"
-		if ( fgets(motd, sizeof motd - 1, motd_file) )		{
+		if (fgets(motd, sizeof motd - 1, motd_file)) {
 			// we successfully read a line from "motd.txt" into motd
 			// ... read the remaining lines now
-			while ( fgets(line, sizeof line, motd_file) )
+			while (fgets(line, sizeof line, motd_file))
 			{
-			// add each new line to motd, to create a BIG message string.
+				// add each new line to motd, to create a BIG message string.
 				strncat(motd, line, sizeof motd - 1);
 			}
 			// print our message.
-			gi.centerprintf (newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n- - - - - - - - - - - - - -\n%s", NHVER, motd);
+			gi.centerprintf(newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n- - - - - - - - - - - - - -\n%s", NHVER, motd);
 		}
 		// be good now ! ... close the file
 		fclose(motd_file);
 	}
 	//if the file wasn't there, we just make up our own motd
 	else
-		gi.centerprintf (newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n", NHVER);
+		gi.centerprintf(newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n", NHVER);
 	//	gi.centerprintf (newplayer, "Welcome to NightHunters beta 1.4!\nThis MOD is (c)opyright 1998 by majoon\nPlease visit:\nhttp://nhunters.gameplex.net\nto download the client-side files.\n");
 }
 
@@ -237,10 +238,10 @@ rocket's radius
 kick
 ============
 */
-void KickRadiusDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker, float damage, edict_t *ignore, float radius, int knockback, int dflags, int mod)
+void KickRadiusDamage(edict_t* targ, edict_t* inflictor, edict_t* attacker, float damage, edict_t* ignore, float radius, int knockback, int dflags, int mod)
 {
 	float	points;
-	edict_t	*ent = NULL;
+	edict_t* ent = NULL;
 	vec3_t	v;
 	vec3_t	dir;
 	vec3_t	kvel;
@@ -254,36 +255,36 @@ void KickRadiusDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker, flo
 		if (!ent->takedamage)
 			continue;
 
-		VectorAdd (ent->mins, ent->maxs, v);
-		VectorMA (ent->s.origin, 0.5, v, v);
-		VectorSubtract (inflictor->s.origin, v, v);
-		points = damage - 0.5 * VectorLength (v);
+		VectorAdd(ent->mins, ent->maxs, v);
+		VectorMA(ent->s.origin, 0.5, v, v);
+		VectorSubtract(inflictor->s.origin, v, v);
+		points = damage - 0.5 * VectorLength(v);
 		if (ent == attacker)
 			points = points * 0.5;
 		if (points > 0)
-//		if (!(dflags & DAMAGE_NO_KNOCKBACK))
-//		{
+			//		if (!(dflags & DAMAGE_NO_KNOCKBACK))
+			//		{
 			if ((knockback) && (targ->movetype != MOVETYPE_NONE) && (targ->movetype != MOVETYPE_BOUNCE) && (targ->movetype != MOVETYPE_PUSH) && (targ->movetype != MOVETYPE_STOP))
 			{
 
 				if (targ->mass < 50)
-				mass = 50;
+					mass = 50;
 				else
 					mass = targ->mass;
 
-//				if (targ->client  && attacker == targ)
-//					VectorScale (dir, 1600.0 * (float)knockback / mass, kvel);	// the rocket jump hack...
-//				else
-					VectorScale (dir, 500.0 * (float)knockback / mass, kvel);
+				//				if (targ->client  && attacker == targ)
+				//					VectorScale (dir, 1600.0 * (float)knockback / mass, kvel);	// the rocket jump hack...
+				//				else
+				VectorScale(dir, 500.0 * (float)knockback / mass, kvel);
 
-				VectorAdd (targ->velocity, kvel, targ->velocity);
+				VectorAdd(targ->velocity, kvel, targ->velocity);
 			}
-//		}
+		//		}
 		{
-			if (CanDamage (ent, inflictor))
+			if (CanDamage(ent, inflictor))
 			{
-				VectorSubtract (ent->s.origin, inflictor->s.origin, dir);
-				T_Damage (ent, inflictor, attacker, dir, inflictor->s.origin, vec3_origin, (int)points, (int)points, DAMAGE_RADIUS, mod);
+				VectorSubtract(ent->s.origin, inflictor->s.origin, dir);
+				T_Damage(ent, inflictor, attacker, dir, inflictor->s.origin, vec3_origin, (int)points, (int)points, DAMAGE_RADIUS, mod);
 			}
 		}
 	}
