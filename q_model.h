@@ -16,27 +16,27 @@
 #define DEFAULT_MARINE_SKIN "nightops"
 
 #define SKINLEN 64
-char predatorModel[SKINLEN/2] ;
-char predatorSkin[SKINLEN] ;
-char marineSkin[SKINLEN] ;
+char predatorModel[SKINLEN / 2];
+char predatorSkin[SKINLEN];
+char marineSkin[SKINLEN];
 
 // Cvar handling.
-void validatePredatorModel() ;
-char *getPredatorModel() ;
-void validatePredatorSkin() ;
-char *getPredatorSkin() ;
+void validatePredatorModel();
+char* getPredatorModel();
+void validatePredatorSkin();
+char* getPredatorSkin();
 
-void validateMarineModel() ;
-char *getMarineModel() ;
-void validateMarineSkin() ;
-char *getMarineSkin() ;  
+void validateMarineModel();
+char* getMarineModel();
+void validateMarineSkin();
+char* getMarineSkin();
 
-void initSkins(void) ;
-char *setLivePredatorSkin(char *, char *) ;
-char *getLivePredatorSkin(void) ;
+void initSkins(void);
+char* setLivePredatorSkin(char*, char*);
+char* getLivePredatorSkin(void);
 
-void setDefaultMarineSkin(void) ;
-void checkMarineSkin(edict_t *ent, char *userinfo) ;
-char *getMarineSkin(void) ;
-void setMarineSkin(edict_t *ent, char *) ;
-qboolean parseSkin(char *full, char *model, char *skin) ;
+void setDefaultMarineSkin(void);
+void checkMarineSkin(edict_t* ent, char* userinfo);
+char* getMarineSkin(void);
+void setMarineSkin(edict_t* ent, char*);
+qboolean parseSkin(char* full, char* model, char* skin);

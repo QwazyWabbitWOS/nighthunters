@@ -9,7 +9,7 @@
 //============================================================================
 
 #include "g_local.h"
-#include "g_cmd_overload.h"                                                    
+#include "g_cmd_overload.h"
 
 void Cmd_SpotRep_f(edict_t* ent) {
 

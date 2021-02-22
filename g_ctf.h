@@ -42,10 +42,10 @@ typedef enum ctfgrapplestate_n {
 	CTF_GRAPPLE_STATE_HANG
 } ctfgrapplestate_t;
 
-extern cvar_t *ctf;
-extern cvar_t *dropflag_delay;
-extern cvar_t *newscore;
-extern cvar_t *ctf_deathscores;
+extern cvar_t* ctf;
+extern cvar_t* dropflag_delay;
+extern cvar_t* newscore;
+extern cvar_t* ctf_deathscores;
 
 #define CTF_TEAM1_SKIN "ctf_r"
 #define CTF_TEAM2_SKIN "ctf_b"
@@ -82,14 +82,14 @@ extern cvar_t *ctf_deathscores;
 #define CTF_GRAPPLE_PULL_SPEED				grapple_pullspeed->value	// speed player is pulled at
 
 
-void CTFChaseCam(edict_t *ent);
+void CTFChaseCam(edict_t* ent);
 
 /**
  Count spectators
  */
 
-void CTFSay_Team_Location(edict_t *who, char *buf);
-void CTFSay_Team(edict_t *who, char *msg);
+void CTFSay_Team_Location(edict_t* who, char* buf);
+void CTFSay_Team(edict_t* who, char* msg);
 
 int CountConnectedClients(void);
 

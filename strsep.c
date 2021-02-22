@@ -2,8 +2,7 @@
 
 #include <string.h>
 
-char*
-strsep(char** stringp, const char* delim)
+char* strsep(char** stringp, const char* delim)
 {
 	char* begin, * end;
 
@@ -25,4 +24,3 @@ strsep(char** stringp, const char* delim)
 
 	return begin;
 }
-

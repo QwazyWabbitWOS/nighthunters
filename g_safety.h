@@ -12,8 +12,8 @@
 #define ENABLE_PREDATOR_SAFETY_DEFAULT "1"
 #define ENABLE_MARINE_SAFETY_DEFAULT "1"
 
-void setSafetyMode(edict_t *ent) ;
-void clearSafetyMode(edict_t *ent) ;
+void setSafetyMode(edict_t* ent);
+void clearSafetyMode(edict_t* ent);
 
 void validateMarineSafetyTime();
 void validatePredatorSafetyTime();

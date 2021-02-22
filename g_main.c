@@ -140,7 +140,6 @@ void ClientUserinfoChanged(edict_t* ent, char* userinfo);
 void ClientDisconnect(edict_t* ent);
 void ClientBegin(edict_t* ent);
 void ClientCommand(edict_t* ent);
-void RunEntity(edict_t* ent);
 void WriteGame(char* filename, qboolean autosave);
 void ReadGame(char* filename);
 void WriteLevel(char* filename);
@@ -161,11 +160,11 @@ void ShutdownGame(void)
 
 #ifdef _WIN32
 	OutputDebugString("ShutdownGame() was called.\n");
-	OutputDebugString("Dump objects since startup.\n");
 	_CrtMemDumpAllObjectsSince(&startup1);
-	OutputDebugString("Memory stats since startup.\n");
 	_CrtMemDumpStatistics(&startup1);
+	OutputDebugString("Leak dump begin.\n");
 	_CrtDumpMemoryLeaks();
+	OutputDebugString("Leak dump end.\n");
 #endif
 
 }

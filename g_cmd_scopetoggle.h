@@ -7,4 +7,4 @@
 // Copyright (c), 1999 The BatCave. All Rights Reserved.
 //===========================================================================
 
-void Cmd_ScopeToggle_f(edict_t *ent) ;
+void Cmd_ScopeToggle_f(edict_t* ent);

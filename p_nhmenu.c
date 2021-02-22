@@ -44,9 +44,9 @@ char infotext[50][50];
 pmenu_t NHMenu[] = {
 
 #if XATRIX
-  { "* Night Hunters 1.51Xatrix", PMENU_ALIGN_CENTER, NULL, NULL },
+  { "* Night Hunters 2.00Xatrix", PMENU_ALIGN_CENTER, NULL, NULL },
 #else
-  { "* Night Hunters 1.51", PMENU_ALIGN_CENTER, NULL, NULL },
+  { "* Night Hunters 2.00", PMENU_ALIGN_CENTER, NULL, NULL },
 #endif
 
   { NULL, PMENU_ALIGN_CENTER, NULL, NULL },

@@ -15,9 +15,9 @@ for(INDEX=1;INDEX<=maxclients->value;INDEX++)			\
 
 #define rndnum(y,z) ((random()*((z)-((y)+1)))+(y))
 
-void stuffcmd(edict_t *e, char *s);
-edict_t *ent_by_name (char *target);
-void centerprint_all (char *msg);
+void stuffcmd(edict_t* e, char* s);
+edict_t* ent_by_name(char* target);
+void centerprint_all(char* msg);
 
 
 

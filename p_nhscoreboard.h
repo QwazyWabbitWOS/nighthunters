@@ -12,7 +12,7 @@
 #define USE_NH_SCOREBOARD_DEFAULT "1"
 
 // NH changes: Scoreboard.
-void NHScoreboardMessage(edict_t *ent, edict_t *killer) ;
-void NHScoreboard(edict_t *ent) ;
-void Cmd_NHScore_f(edict_t *ent) ;
+void NHScoreboardMessage(edict_t* ent, edict_t* killer);
+void NHScoreboard(edict_t* ent);
+void Cmd_NHScore_f(edict_t* ent);
 

@@ -1,1 +1,1 @@
-char *strsep (char **stringp, const char *delim);
+char* strsep(char** stringp, const char* delim);

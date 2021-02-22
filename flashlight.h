@@ -26,7 +26,8 @@ void playerEffects(edict_t* player);
 
 int nextdynamicset;
 
-void KickRadiusDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker, float damage, edict_t *ignore, float radius, int knockback, int dflags, int mod);
+void KickRadiusDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker, 
+	float damage, edict_t *ignore, float radius, int knockback, int dflags, int mod);
 
 // Added by DingBat
 void StartPredator(edict_t *ent) ;

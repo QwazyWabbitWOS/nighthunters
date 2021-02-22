@@ -9,11 +9,11 @@
 //============================================================================
 
 // NH changes: Hud
-void setHud(edict_t *ent, char *hud) ;
-void setNHHud(edict_t *ent) ;
+void setHud(edict_t* ent, char* hud);
+void setNHHud(edict_t* ent);
 
 #if 0
-void setMarineHud(edict_t *ent) ;
-void setPredStartHud(edict_t *ent) ;
-void setPredStdHud(edict_t *ent) ;
+void setMarineHud(edict_t* ent);
+void setPredStartHud(edict_t* ent);
+void setPredStdHud(edict_t* ent);
 #endif

@@ -135,9 +135,10 @@ void InitGame(void)
 {
 #ifdef	_WIN32
 	_CrtMemCheckpoint(&startup1);
+	_crtBreakAlloc = 2246;
 #endif
 
-	gi.dprintf("==== InitGame ====\nNightHunters %s\n"
+	gi.dprintf("==== InitGame ====\n==== NightHunters %s ====\n"
 		"www.planetquake.com/nighthunters\n\n", NHVER); // ***** NH change *****
 
 	gun_x = gi.cvar("gun_x", "0", 0);
@@ -198,9 +199,9 @@ void InitGame(void)
 	flood_waitdelay = gi.cvar("flood_waitdelay", "10", 0);
 
 	// dm map list
-	sv_maplist = gi.cvar("sv_maplist", "", 0);
-	sv_maplist2 = gi.cvar("sv_maplist2", "", 0); // ***** NH Change *****
-	sv_maplist3 = gi.cvar("sv_maplist3", "", 0); // ***** NH Change *****
+	sv_maplist = gi.cvar("sv_maplist", "", CVAR_LATCH);
+	sv_maplist2 = gi.cvar("sv_maplist2", "", CVAR_LATCH); // ***** NH Change *****
+	sv_maplist3 = gi.cvar("sv_maplist3", "", CVAR_LATCH); // ***** NH Change *****
 	sv_maplist_small_max = gi.cvar("sv_maplist_small_max", MAPLIST_SMALL_MAX_DEFAULT, 0); // ***** NH Change *****
 	sv_maplist_medium_max = gi.cvar("sv_maplist_medium_max", MAPLIST_MEDIUM_MAX_DEFAULT, 0); // ***** NH Change *****
 
@@ -324,7 +325,6 @@ void InitGame(void)
 	light_show_interval = gi.cvar("light_show_interval", LIGHT_SHOW_INTERVAL_DEFAULT, 0);
 	validateLightShowInterval();
 	// ***** End of NH changes *****
-
 }
 
 //=========================================================
@@ -375,6 +375,24 @@ void WriteField1(FILE* f, field_t* field, byte* base)
 			index = -1;
 		else
 			index = *(gitem_t**)p - itemlist;
+		*(int*)p = index;
+		break;
+
+		//relative to code segment
+	case F_FUNCTION:
+		if (*(byte**)p == NULL)
+			index = 0;
+		else
+			index = *(byte**)p - ((byte*)InitGame);
+		*(int*)p = index;
+		break;
+
+		//relative to data segment
+	case F_MMOVE:
+		if (*(byte**)p == NULL)
+			index = 0;
+		else
+			index = *(byte**)p - (byte*)&mmove_reloc;
 		*(int*)p = index;
 		break;
 
@@ -439,6 +457,18 @@ void ReadField(FILE* f, field_t* field, byte* base)
 				; // don't worry, be happy
 		}
 		break;
+	case F_GSTRING:
+		len = *(int*)p;
+		if (!len)
+			*(char**)p = NULL;
+		else
+		{
+			*(char**)p = gi.TagMalloc(len, TAG_GAME);
+			count = fread(*(char**)p, len, 1, f);
+			if (count)
+				; // don't worry, be happy
+		}
+		break;
 	case F_EDICT:
 		index = *(int*)p;
 		if (index == -1)
@@ -459,6 +489,24 @@ void ReadField(FILE* f, field_t* field, byte* base)
 			*(gitem_t**)p = NULL;
 		else
 			*(gitem_t**)p = &itemlist[index];
+		break;
+
+		//relative to code segment
+	case F_FUNCTION:
+		index = *(int*)p;
+		if (index == 0)
+			*(byte**)p = NULL;
+		else
+			*(byte**)p = ((byte*)InitGame) + index;
+		break;
+
+		//relative to data segment
+	case F_MMOVE:
+		index = *(int*)p;
+		if (index == 0)
+			*(byte**)p = NULL;
+		else
+			*(byte**)p = (byte*)&mmove_reloc + index;
 		break;
 
 	default:

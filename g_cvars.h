@@ -16,17 +16,17 @@
 #define MAPLIST_MEDIUM_MAX_DEFAULT "8"
 
 // Cvar validation etc
-void validateMaxRate() ;
-int getMaxRate() ;
+void validateMaxRate();
+int getMaxRate();
 
-void validateMaxMarineKill() ;
-int getMaxMarineKill() ;
+void validateMaxMarineKill();
+int getMaxMarineKill();
 
-void validateMaxTime() ;
-int getMaxTime() ;
+void validateMaxTime();
+int getMaxTime();
 
-void validateMinScore() ;
-int getMinScore() ;
+void validateMinScore();
+int getMinScore();
 
 void validateMaplistMediumMax();
 int getMaplistMediumMax();
