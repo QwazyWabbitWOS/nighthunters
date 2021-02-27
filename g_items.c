@@ -18,11 +18,9 @@ void Weapon_GrenadeLauncher(edict_t* ent);
 void Weapon_Railgun(edict_t* ent);
 // void Weapon_BFG (edict_t *ent); // ***** NH change *****
 
-gitem_armor_t jacketarmor_info = { 25,  50, .30, .00, ARMOR_JACKET };
-gitem_armor_t combatarmor_info = { 50, 100, .60, .30, ARMOR_COMBAT };
-gitem_armor_t bodyarmor_info = { 100, 200, .80, .60, ARMOR_BODY };
-
-// ***** NH change ***** note: 1.44.4a had the following statics remmed out and regular int's put in.  Don't know why...  left as 3.20/3.14 code has it (static)
+gitem_armor_t jacketarmor_info	= { 25,  50, .30f, .00f, ARMOR_JACKET};
+gitem_armor_t combatarmor_info	= { 50, 100, .60f, .30f, ARMOR_COMBAT};
+gitem_armor_t bodyarmor_info	= {100, 200, .80f, .60f, ARMOR_BODY};
 
 int	jacket_armor_index;
 int	combat_armor_index;

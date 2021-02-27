@@ -6,6 +6,9 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <crtdbg.h>
+  #ifndef __func__
+    #define __func__ __FUNCTION__ // for backward compatibility
+  #endif
 _CrtMemState startup1;	// memory diagnostics
 #else
 #define OutputDebugString	//not doing Windows
@@ -554,7 +557,7 @@ extern	edict_t* g_edicts;
 #define	CLOFS(x)	q_offsetof(gclient_t, x)
 
 #define random()	((rand () & 0x7fff) / ((float)0x7fff))
-#define crandom()	(2.0 * (random() - 0.5))
+#define crandom()	(2.0f * (random() - 0.5f))
 
 extern	cvar_t* maxentities;
 extern	cvar_t* deathmatch;
@@ -763,6 +766,18 @@ int PowerArmorType(edict_t* ent);
 gitem_t* GetItemByIndex(int index);
 qboolean Add_Ammo(edict_t* ent, gitem_t* item, int count);
 void Touch_Item(edict_t* ent, edict_t* other, cplane_t* plane, csurface_t* surf);
+
+//
+// g_spawn.c
+//
+/**
+ Finds the spawn function for the entity and calls it
+ */
+extern void ED_CallSpawn(edict_t* ent);
+char* ED_NewString(char* string); void ED_ParseField(char* key, char* value, edict_t* ent);
+char* ED_ParseEdict(char* data, edict_t* ent);
+void G_FindTeams(void);
+void SpawnEntities(char* mapname, char* entities, char* spawnpoint);
 
 //
 // g_utils.c

@@ -536,8 +536,6 @@ void medic_hook_launch (edict_t *self)
 	gi.sound (self, CHAN_WEAPON, sound_hook_launch, 1, ATTN_NORM, 0);
 }
 
-void ED_CallSpawn (edict_t *ent);
-
 static vec3_t	medic_cable_offsets[] =
 {
 	{45.0f,  -9.2f, 15.5f},
