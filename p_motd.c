@@ -51,14 +51,14 @@ void ShowMOTD(edict_t* ent)
 		}
 		// be good now ! ... close the file
 		fclose(motd_file);
+
+		gi.WriteByte(svc_layout);
+		gi.WriteString(string);
+		gi.unicast(ent, true);
+
+		// Added by bruce
+		ent->ShowMOTD = (int)(level.time + getMotdTime());
 	}
-
-	gi.WriteByte(svc_layout);
-	gi.WriteString(string);
-	gi.unicast(ent, true);
-
-	// Added by bruce
-	ent->ShowMOTD = (int)(level.time + getMotdTime());
 }
 
 qboolean
