@@ -18,7 +18,8 @@ ARCH := $(shell uname -m | sed -e s/i.86/i386/ \
 # On 64-bit OS use the command: setarch i386 make all
 # to obtain the 32-bit binary DLL on 64-bit Linux.
 
-CC = gcc -std=c11 -Wall -Wpedantic
+# nhunters uses strdup so we are confined to gnu99 for the time being.
+CC = gcc -std=gnu99 -Wall
 
 # on x64 machines do this preparation:
 # sudo apt-get install ia32-libs

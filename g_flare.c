@@ -182,7 +182,7 @@ void fire_flare(edict_t* self, vec3_t start, vec3_t aimdir, int damage, int spee
 	grenade = G_Spawn();
 	VectorCopy(start, grenade->s.origin);
 	VectorScale(aimdir, speed, grenade->velocity);
-	VectorMA(grenade->velocity, 200 + crandom() * 10.0, up, grenade->velocity);
+	VectorMA(grenade->velocity, 200 + crandom() * 10.0f, up, grenade->velocity);
 	VectorMA(grenade->velocity, crandom() * 10.0, right, grenade->velocity);
 	VectorSet(grenade->avelocity, 300, 300, 300);
 	grenade->movetype = MOVETYPE_BOUNCE;

@@ -474,11 +474,11 @@ or a direction.
 void target_laser_think (edict_t *self)
 {
 	edict_t	*ignore;
-	vec3_t	start;
+	vec3_t	start = { 0 };
 	vec3_t	end;
 	trace_t	tr;
 	vec3_t	point;
-	vec3_t	last_movedir;
+	vec3_t	last_movedir = { 0 };
 	int		count;
 
 	if (self->spawnflags & 0x80000000)
@@ -634,7 +634,7 @@ message		two letters; starting lightlevel and ending lightlevel
 
 void target_lightramp_think (edict_t *self)
 {
-	char	style[2];
+	char	style[2] = { 0 };
 
 	style[0] = 'a' + self->movedir[0] + (level.time - self->timestamp) / FRAMETIME * self->movedir[2];
 	style[1] = 0;

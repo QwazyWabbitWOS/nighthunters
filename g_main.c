@@ -279,6 +279,154 @@ edict_t* CreateTargetChangeLevel(char* map)
 	return ent;
 }
 
+/**
+Select next map based on current server load.
+*/
+void SelectNextMap(void)
+{
+	int lastsize = 1;
+	int count = 0;
+	char* s = NULL;
+	char* t = NULL;
+	char* f;
+	char* temp = NULL;
+	char* tmp = NULL;
+	char lastmap[64] = { 0 };
+	static const char* seps = " ,\n\r";
+
+	count = CountConnectedClients();
+
+	if (strlen(maplist_lastmap) == 0) {
+		if (strlen(sv_maplist->string)) { // string must be filled before we use it.
+			temp = strdup(sv_maplist->string);
+			if (temp) {
+				tmp = temp;
+			}
+			else {
+				gi.error("Allocation failed in %s line %i\n", __func__, __LINE__);
+				return;
+			}
+			while (temp != NULL)
+				Q_strncpyz(maplist_lastmap, sizeof maplist_lastmap, strsep(&temp, seps));
+			free(tmp);
+		}
+		else
+		{	// at least one of the sv_maplists must be set or we quit.
+			gi.error("sv_maplist is not set.\n");
+			return;
+		}
+	}
+	
+	if (strlen(maplist2_lastmap) == 0) {
+		if (strlen(sv_maplist2->string)) {
+			temp = strdup(sv_maplist2->string);
+			if (temp) {
+				tmp = temp;
+			}
+			else {
+				gi.error("Allocation failed in %s line %i\n", __func__, __LINE__);
+				return;
+			}
+			while (temp != NULL)
+				Q_strncpyz(maplist2_lastmap, sizeof maplist2_lastmap, strsep(&temp, seps));
+			free(tmp);
+		}
+		else
+		{
+			gi.dprintf("WARNING: sv_maplist2 is not set.\n");
+		}
+	}
+
+	if (strlen(maplist3_lastmap) == 0) {
+		if (strlen(sv_maplist3->string)) {
+			temp = strdup(sv_maplist3->string);
+			if (temp) {
+				tmp = temp;
+			}
+			else {
+				gi.error("Allocation failed in %s line %i\n", __func__, __LINE__);
+				return;
+			}
+			while (temp != NULL)
+				Q_strncpyz(maplist3_lastmap, sizeof maplist3_lastmap, strsep(&temp, seps));
+			free(tmp);
+		}
+		else
+		{
+			gi.dprintf("WARNING: sv_maplist3 is not set.\n");
+		}
+	}
+
+	if ((count <= getMaplistSmallMax()) && (*sv_maplist->string)) {
+		s = strdup(sv_maplist->string);
+		Q_strncpyz(lastmap, sizeof lastmap, maplist_lastmap);
+		lastsize = 1;
+	}
+
+	if (((count > getMaplistSmallMax()) &&
+		(count <= getMaplistMediumMax())) && *sv_maplist2->string) {
+		s = strdup(sv_maplist2->string);
+		Q_strncpyz(lastmap, sizeof lastmap, maplist2_lastmap);
+		lastsize = 2;
+	}
+
+	if ((count > getMaplistMediumMax()) && *sv_maplist3->string) {
+		s = strdup(sv_maplist3->string);
+		Q_strncpyz(lastmap, sizeof lastmap, maplist3_lastmap);
+		lastsize = 3;
+	}
+
+	// ***** End of NH Changes *****
+	f = NULL;
+	t = strtok(s, seps);
+	while (t != NULL) {
+
+		if (((strlen(lastmap) != 0) &&
+			(Q_stricmp(t, lastmap) == 0)) ||
+			(Q_stricmp(t, level.mapname) == 0)) {
+
+			// Found last map in list.
+			// Go on to next one.
+			t = strtok(NULL, seps);
+
+			// Check if end of list.
+			if (t == NULL) {
+
+				// End of list.
+				// Go to first level on list.
+				if (f == NULL) {
+					BeginIntermission(CreateTargetChangeLevel(level.mapname));
+					Q_strncpyz(lastmap, sizeof lastmap, level.mapname);
+				}
+				else {
+					BeginIntermission(CreateTargetChangeLevel(f));
+					Q_strncpyz(lastmap, sizeof lastmap, f);
+				}
+			}
+			else {
+				BeginIntermission(CreateTargetChangeLevel(t));
+				Q_strncpyz(lastmap, sizeof lastmap, t);
+			}
+
+			// ***** Start of NH Changes *****
+			if (lastsize == 1)
+				Q_strncpyz(maplist_lastmap, sizeof maplist_lastmap, lastmap);
+			else if (lastsize == 2)
+				Q_strncpyz(maplist2_lastmap, sizeof maplist2_lastmap, lastmap);
+			else if (lastsize == 3)
+				Q_strncpyz(maplist3_lastmap, sizeof maplist3_lastmap, lastmap);
+
+			free(s);
+			return;
+		}
+		if (!f) {
+			f = t;
+		}
+		t = strtok(NULL, seps);
+	}
+	free(s);
+}
+
 /*
 =================
 EndDMLevel
@@ -289,15 +437,6 @@ The timelimit or fraglimit has been exceeded
 void EndDMLevel(void)
 {
 	edict_t* ent;
-	int count = 0;
-	int lastsize = 1; // ***** NH Change *****
-	char* s = NULL;
-	char* t = NULL;
-	char* f;
-	char* temp = NULL;
-	char* tmp = NULL;
-	char lastmap[64] = { 0 };
-	static const char* seps = " ,\n\r";
 
 	// Toggle to different intermission beat wav file
 	if (last_beat)
@@ -311,122 +450,7 @@ void EndDMLevel(void)
 		return;
 	}
 
-	count = CountConnectedClients();
-
-	// see if it's in the map list
-
-	// This check is redundant now.
-	if (*sv_maplist->string) {
-		if (!*sv_maplist2->string)
-			sv_maplist_small_max->value = 999;
-		if (!*sv_maplist3->string)
-			sv_maplist_medium_max->value = 999;
-
-
-		// ***** Start of NH Changes *****
-		// This really should be done elsewhere.
-		if (strlen(maplist_lastmap) == 0 && strlen(sv_maplist->string)) {
-			temp = strdup(sv_maplist->string);
-			if (temp)
-				tmp = temp;
-			strcpy(maplist_lastmap, strsep(&temp, seps));
-			while (temp != NULL)
-				strcpy(maplist_lastmap, strsep(&temp, seps));
-			free(tmp);
-		}
-
-		if (strlen(maplist2_lastmap) == 0 && strlen(sv_maplist2->string)) {
-			temp = strdup(sv_maplist2->string);
-			if (temp)
-				tmp = temp;
-			strcpy(maplist2_lastmap, strsep(&temp, seps));
-			while (temp != NULL)
-				strcpy(maplist2_lastmap, strsep(&temp, seps));
-			free(tmp);
-		}
-
-		if (strlen(maplist3_lastmap) == 0 && strlen(sv_maplist2->string)) {
-			temp = strdup(sv_maplist3->string);
-			if (temp)
-				tmp = temp;
-			strcpy(maplist3_lastmap, strsep(&temp, seps));
-			while (temp != NULL)
-				strcpy(maplist3_lastmap, strsep(&temp, seps));
-			free(tmp);
-		}
-
-
-		if ((count <= getMaplistSmallMax()) && (*sv_maplist->string)) {
-			s = strdup(sv_maplist->string);
-			Q_strncpyz(lastmap, sizeof lastmap, maplist_lastmap);
-			lastsize = 1;
-		}
-
-		if (((count > getMaplistSmallMax()) &&
-			(count <= getMaplistMediumMax())) &&
-			*sv_maplist2->string) {
-			s = strdup(sv_maplist2->string);
-			Q_strncpyz(lastmap, sizeof lastmap, maplist2_lastmap);
-			lastsize = 2;
-		}
-
-		if ((count > getMaplistMediumMax()) &&
-			*sv_maplist3->string) {
-			s = strdup(sv_maplist3->string);
-			Q_strncpyz(lastmap, sizeof lastmap, maplist3_lastmap);
-			lastsize = 3;
-		}
-
-		// ***** End of NH Changes *****
-		f = NULL;
-		t = strtok(s, seps);
-		while (t != NULL) {
-
-			if (((strlen(lastmap) != 0) &&
-				(Q_stricmp(t, lastmap) == 0)) ||
-				(Q_stricmp(t, level.mapname) == 0)) {
-
-				// Found last map in list.
-				// Go on to next one.
-				t = strtok(NULL, seps);
-
-				// Check if end of list.
-				if (t == NULL) {
-
-					// End of list.
-					// Go to first level on list.
-					if (f == NULL) {
-						BeginIntermission(CreateTargetChangeLevel(level.mapname));
-						Q_strncpyz(lastmap, sizeof lastmap, level.mapname);
-					}
-					else {
-						BeginIntermission(CreateTargetChangeLevel(f));
-						Q_strncpyz(lastmap, sizeof lastmap, f);
-					}
-				}
-				else {
-					BeginIntermission(CreateTargetChangeLevel(t));
-					Q_strncpyz(lastmap, sizeof lastmap, t);
-				}
-
-				// ***** Start of NH Changes *****
-				if (lastsize == 1)
-					Q_strncpyz(maplist_lastmap, sizeof maplist_lastmap, lastmap);
-				else if (lastsize == 2)
-					Q_strncpyz(maplist2_lastmap, sizeof maplist2_lastmap, lastmap);
-				else if (lastsize == 3)
-					Q_strncpyz(maplist3_lastmap, sizeof maplist3_lastmap, lastmap);
-
-				free(s);
-				return;
-			}
-			if (!f) {
-				f = t;
-			}
-			t = strtok(NULL, seps);
-		}
-		free(s);
-	}
+	SelectNextMap();
 
 	if (level.nextmap[0]) // go to a specific map
 		BeginIntermission(CreateTargetChangeLevel(level.nextmap));
@@ -620,7 +644,7 @@ void G_RunFrame(void)
 		// New predator switching.
 		lookForPredator(NULL);
 
-		if (stuffLight()) 
+		if (stuffLight())
 		{
 			for (i = 0; i <= maxclients->value; i++)
 			{

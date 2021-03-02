@@ -1062,7 +1062,7 @@ void ClientCommand(edict_t* ent)
 	{
 		// If observing use flashlight key to enter game..
 		if (ent->isObserving) {
-			EnterGame(ent);
+			EnterGame(ent, NULL);
 			return;
 		}
 		else {

@@ -137,9 +137,9 @@ void P_DamageFeedback (edict_t *player)
 		client->damage_alpha = 0;
 	client->damage_alpha += count*0.01;
 	if (client->damage_alpha < 0.2)
-		client->damage_alpha = 0.2;
+		client->damage_alpha = 0.2f;
 	if (client->damage_alpha > 0.6)
-		client->damage_alpha = 0.6;		// don't go too saturated
+		client->damage_alpha = 0.6f;		// don't go too saturated
 
 	// the color of the blend will vary based on how much was absorbed
 	// by different armors
@@ -206,86 +206,86 @@ Auto pitching on slopes?
 
 ===============
 */
-void SV_CalcViewOffset (edict_t *ent)
+void SV_CalcViewOffset(edict_t* ent)
 {
-	float		*angles;
+	float* angles;
 	float		bob;
 	float		ratio;
 	float		delta;
 	vec3_t		v;
 
 
-//===================================
+	//===================================
 
-	// base angles
+		// base angles
 	angles = ent->client->ps.kick_angles;
 
 	// if dead, fix the angle and don't add any kick
 	if (!ent->inWaiting)  // Don't change angle if waiting to be pred	// ***** NH change *****
 	{	// ***** NH change *****
 
-	if (ent->deadflag)
-	{
-		VectorClear (angles);
-
-		ent->client->ps.viewangles[ROLL] = 40;
-		ent->client->ps.viewangles[PITCH] = -15;
-		ent->client->ps.viewangles[YAW] = ent->client->killer_yaw;
-	}
-	else
-	{
-		// add angles based on weapon kick
-
-		VectorCopy (ent->client->kick_angles, angles);
-
-		// add angles based on damage kick
-
-		ratio = (ent->client->v_dmg_time - level.time) / DAMAGE_TIME;
-		if (ratio < 0)
+		if (ent->deadflag)
 		{
-			ratio = 0;
-			ent->client->v_dmg_pitch = 0;
-			ent->client->v_dmg_roll = 0;
+			VectorClear(angles);
+
+			ent->client->ps.viewangles[ROLL] = 40;
+			ent->client->ps.viewangles[PITCH] = -15;
+			ent->client->ps.viewangles[YAW] = ent->client->killer_yaw;
 		}
-		angles[PITCH] += ratio * ent->client->v_dmg_pitch;
-		angles[ROLL] += ratio * ent->client->v_dmg_roll;
+		else
+		{
+			// add angles based on weapon kick
 
-		// add pitch based on fall kick
+			VectorCopy(ent->client->kick_angles, angles);
 
-		ratio = (ent->client->fall_time - level.time) / FALL_TIME;
-		if (ratio < 0)
-			ratio = 0;
-		angles[PITCH] += ratio * ent->client->fall_value;
+			// add angles based on damage kick
 
-		// add angles based on velocity
+			ratio = (ent->client->v_dmg_time - level.time) / DAMAGE_TIME;
+			if (ratio < 0)
+			{
+				ratio = 0;
+				ent->client->v_dmg_pitch = 0;
+				ent->client->v_dmg_roll = 0;
+			}
+			angles[PITCH] += ratio * ent->client->v_dmg_pitch;
+			angles[ROLL] += ratio * ent->client->v_dmg_roll;
 
-		delta = DotProduct (ent->velocity, forward);
-		angles[PITCH] += delta*run_pitch->value;
-		
-		delta = DotProduct (ent->velocity, right);
-		angles[ROLL] += delta*run_roll->value;
+			// add pitch based on fall kick
 
-		// add angles based on bob
+			ratio = (ent->client->fall_time - level.time) / FALL_TIME;
+			if (ratio < 0)
+				ratio = 0;
+			angles[PITCH] += ratio * ent->client->fall_value;
 
-		delta = bobfracsin * bob_pitch->value * xyspeed;
-		if (ent->client->ps.pmove.pm_flags & PMF_DUCKED)
-			delta *= 6;		// crouching
-		angles[PITCH] += delta;
-		delta = bobfracsin * bob_roll->value * xyspeed;
-		if (ent->client->ps.pmove.pm_flags & PMF_DUCKED)
-			delta *= 6;		// crouching
-		if (bobcycle & 1)
-			delta = -delta;
-		angles[ROLL] += delta;
-	}
+			// add angles based on velocity
+
+			delta = DotProduct(ent->velocity, forward);
+			angles[PITCH] += delta * run_pitch->value;
+
+			delta = DotProduct(ent->velocity, right);
+			angles[ROLL] += delta * run_roll->value;
+
+			// add angles based on bob
+
+			delta = bobfracsin * bob_pitch->value * xyspeed;
+			if (ent->client->ps.pmove.pm_flags & PMF_DUCKED)
+				delta *= 6;		// crouching
+			angles[PITCH] += delta;
+			delta = bobfracsin * bob_roll->value * xyspeed;
+			if (ent->client->ps.pmove.pm_flags & PMF_DUCKED)
+				delta *= 6;		// crouching
+			if (bobcycle & 1)
+				delta = -delta;
+			angles[ROLL] += delta;
+		}
 
 	} // ***** NH change *****
-	
+
 //===================================
 
 	// base origin
 
-	VectorClear (v);
+	VectorClear(v);
 
 	// add view height
 
@@ -308,7 +308,7 @@ void SV_CalcViewOffset (edict_t *ent)
 
 	// add kick offset
 
-	VectorAdd (v, ent->client->kick_origin, v);
+	VectorAdd(v, ent->client->kick_origin, v);
 
 	// absolutely bound offsets
 	// so the view can never be outside the player box
@@ -326,7 +326,7 @@ void SV_CalcViewOffset (edict_t *ent)
 	else if (v[2] > 30)
 		v[2] = 30;
 
-	VectorCopy (v, ent->client->ps.viewoffset);
+	VectorCopy(v, ent->client->ps.viewoffset);
 }
 
 /*

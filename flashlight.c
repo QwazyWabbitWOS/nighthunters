@@ -10,6 +10,7 @@
 
 #include "g_local.h"
 
+int nextdynamicset;
 /*----------------------------------------
   SP_Flashlight
 
@@ -34,7 +35,7 @@ void ClearFlashlight(edict_t* self) {
 
 void SP_Flashlight(edict_t* self) {
 
-	vec3_t  start, forward, right, end;
+	vec3_t  start, forward, right, end = { 0 };
 
 	//***** Spectator *****
 	if (self->inWaiting || self->isObserving)
@@ -104,7 +105,7 @@ void SP_Flashlight(edict_t* self) {
 
 void FlashlightThink(edict_t* self)
 {
-	vec3_t start, end, endp, offset;
+	vec3_t start, end, endp, offset = { 0 };
 	vec3_t forward, right, up;
 	trace_t tr;
 
@@ -242,7 +243,7 @@ void KickRadiusDamage(edict_t* targ, edict_t* inflictor, edict_t* attacker, floa
 {
 	float	points;
 	edict_t* ent = NULL;
-	vec3_t	v;
+	vec3_t	v = { 0 };
 	vec3_t	dir;
 	vec3_t	kvel;
 	float	mass;

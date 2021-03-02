@@ -28,12 +28,14 @@ void ShowNHCreditsMenu(edict_t* ent, pmenu_t* p);
 void ShowNHCreditsMenu2(edict_t* ent, pmenu_t* p);
 void ReturnToNHMainMenu(edict_t* ent, pmenu_t* p);
 void CloseNHMenu(edict_t* ent, pmenu_t* p);
-void EnterGame(edict_t* ent);
+void EnterGame(edict_t *ent, pmenu_t *p) ;
 void ObserveGame(edict_t* ent, pmenu_t* p);
+void ChaseCam(edict_t *ent, pmenu_t *p) ;
 void SetupBindings(edict_t* ent, pmenu_t* p);
 
 void spectator_respawn(edict_t* ent); //QW// FIXME: defined in p+client.c
 
+qboolean showscores;
 // Menu initialization.
 
 pmenu_t NHInfoMenu[20];
@@ -481,7 +483,7 @@ void SetupBindings(edict_t* ent, pmenu_t* p) {
 }
 
 // Enter the game.
-void EnterGame(edict_t* ent) {
+void EnterGame(edict_t *ent, pmenu_t *p) {
 
 	if (ent->isObserving) {
 		//only if currently observing or chasecam, enter the game

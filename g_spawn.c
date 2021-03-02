@@ -260,69 +260,69 @@ ED_CallSpawn
 Finds the spawn function for the entity and calls it
 ===============
 */
-void ED_CallSpawn (edict_t *ent)
+void ED_CallSpawn(edict_t* ent)
 {
-	spawn_t	*s;
-	gitem_t	*item;
+	spawn_t* s;
+	gitem_t* item;
 	int		i;
 
 	if (!ent->classname)
 	{
-		gi.dprintf ("ED_CallSpawn: NULL classname\n");
+		gi.dprintf("%s: NULL classname\n", __func__);
 		return;
 	}
 
 	// check item spawn functions
-	for (i=0,item=itemlist ; i<game.num_items ; i++,item++)
+	for (i = 0, item = itemlist; i < game.num_items; i++, item++)
 	{
 		if (!item->classname)
 			continue;
 		// ***** Start of NH Changes *****
-               	if (!strcmp(ent->classname, "weapon_bfg")) // wants bfg
+		if (!strcmp(ent->classname, "weapon_bfg")) // wants bfg
 
 			if (!strcmp(item->classname, "weapon_railgun"))
 			{	// found it
-				SpawnItem (ent, item);
+				SpawnItem(ent, item);
 				return;
 			}
 
-               	if (!strcmp(ent->classname, "item_quad")) // wants quad - switch if IR disabled
-
-			if (!strcmp(item->classname, "item_armor_combat") && !getIREffectTime() )
-			{	// found it
-				SpawnItem (ent, item);
-				return;
-			}
-
-               	if (!strcmp(ent->classname, "item_invulnerability")) // wants invul - switch if IR disabled
+		if (!strcmp(ent->classname, "item_quad")) // wants quad - switch if IR disabled
 
 			if (!strcmp(item->classname, "item_armor_combat") && !getIREffectTime())
 			{	// found it
-				SpawnItem (ent, item);
+				SpawnItem(ent, item);
+				return;
+			}
+
+		if (!strcmp(ent->classname, "item_invulnerability")) // wants invul - switch if IR disabled
+
+			if (!strcmp(item->classname, "item_armor_combat") && !getIREffectTime())
+			{	// found it
+				SpawnItem(ent, item);
 				return;
 			}
 
 
- 		// ***** End of NH Changes *****              	
-		
+		// ***** End of NH Changes *****              	
+
 		if (!strcmp(item->classname, ent->classname))
 		{	// found it
-			SpawnItem (ent, item);
+			SpawnItem(ent, item);
 			return;
 		}
 	}
 
 	// check normal spawn functions
-	for (s=spawns ; s->name ; s++)
+	for (s = spawns; s->name; s++)
 	{
 		if (!strcmp(s->name, ent->classname))
 		{	// found it
-			s->spawn (ent);
+			s->spawn(ent);
 			return;
 		}
 	}
-	if (strncmp(ent->classname,"monster",7) && strcmp(ent->classname,"weapon_bfg")) // ***** NH change ***** don't display error if it's a monster or bfg
-	gi.dprintf ("%s doesn't have a spawn function\n", ent->classname);
+	if (strncmp(ent->classname, "monster", 7) && strcmp(ent->classname, "weapon_bfg")) // ***** NH change ***** don't display error if it's a monster or bfg
+		gi.dprintf("\"%s\" doesn't have a spawn function\n", ent->classname);
 }
 
 /*
@@ -378,7 +378,7 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 	
 	for (f=fields ; f->name ; f++)
 	{
-		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key))
+		if (!Q_stricmp(f->name, key) /*&& !(f->flags & FFL_NOSPAWN)*/)
 		{	// found it
 			if (f->flags & FFL_SPAWNTEMP)
 				b = (byte *)&st;
@@ -419,7 +419,7 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 			return;
 		}
 	}
-	gi.dprintf ("%s is not a field\n", key);
+	gi.dprintf ("%s: %s is not a field\n", __func__, key);
 }
 
 /*

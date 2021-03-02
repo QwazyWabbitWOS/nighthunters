@@ -34,5 +34,7 @@ int getIREffectTime(void);
 // Temporary hack for IR goggle drop.
 // We need to know whether the player was carring the quad or the invuln
 // Once we get a proper model for IR goggles, it won't matter.
-gitem_t* IR_type_dropped;
+extern gitem_t *IR_type_dropped ;
 
+int getIRMarineFOV(void);
+int getIREffectTime(void);

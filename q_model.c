@@ -9,6 +9,9 @@
 
 #include "g_local.h"
 
+char predatorModel[SKINLEN/2] ;
+char predatorSkin[SKINLEN] ;
+char marineSkin[SKINLEN] ;
 // Cvar handling
 void validatePredatorModel() {
 
@@ -170,8 +173,6 @@ void setMarineSkin(edict_t* ent, char* skin) {
 qboolean parseSkin(char* fullSkin, char* model, char* skin) {
 
 	char* tmp;
-	//size_t ind ; //QW// Unused.
-
 
 	// Initialize
 	model[0] = '\0';
