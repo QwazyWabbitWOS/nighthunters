@@ -288,7 +288,7 @@ void SelectNextMap(void)
 	int count = 0;
 	char* s = NULL;
 	char* t = NULL;
-	char* f;
+	char* f = NULL;
 	char* temp = NULL;
 	char* tmp = NULL;
 	char lastmap[64] = { 0 };
@@ -298,7 +298,7 @@ void SelectNextMap(void)
 
 	if (strlen(maplist_lastmap) == 0) {
 		if (strlen(sv_maplist->string)) { // string must be filled before we use it.
-			temp = strdup(sv_maplist->string);
+			temp = G_CopyString(sv_maplist->string);
 			if (temp) {
 				tmp = temp;
 			}
@@ -306,12 +306,12 @@ void SelectNextMap(void)
 				gi.error("Allocation failed in %s line %i\n", __func__, __LINE__);
 				return;
 			}
-			while (temp != NULL)
+			while (temp != NULL) {
 				Q_strncpyz(maplist_lastmap, sizeof maplist_lastmap, strsep(&temp, seps));
-			free(tmp);
+			}
+			gi.TagFree(tmp);
 		}
-		else
-		{	// at least one of the sv_maplists must be set or we quit.
+		else {	// at least one of the sv_maplists must be set or we quit.
 			gi.error("sv_maplist is not set.\n");
 			return;
 		}
@@ -319,7 +319,7 @@ void SelectNextMap(void)
 	
 	if (strlen(maplist2_lastmap) == 0) {
 		if (strlen(sv_maplist2->string)) {
-			temp = strdup(sv_maplist2->string);
+			temp = G_CopyString(sv_maplist2->string);
 			if (temp) {
 				tmp = temp;
 			}
@@ -327,19 +327,19 @@ void SelectNextMap(void)
 				gi.error("Allocation failed in %s line %i\n", __func__, __LINE__);
 				return;
 			}
-			while (temp != NULL)
+			while (temp != NULL) {
 				Q_strncpyz(maplist2_lastmap, sizeof maplist2_lastmap, strsep(&temp, seps));
-			free(tmp);
+			}
+			gi.TagFree(tmp);
 		}
-		else
-		{
+		else {
 			gi.dprintf("WARNING: sv_maplist2 is not set.\n");
 		}
 	}
 
 	if (strlen(maplist3_lastmap) == 0) {
 		if (strlen(sv_maplist3->string)) {
-			temp = strdup(sv_maplist3->string);
+			temp = G_CopyString(sv_maplist3->string);
 			if (temp) {
 				tmp = temp;
 			}
@@ -347,37 +347,35 @@ void SelectNextMap(void)
 				gi.error("Allocation failed in %s line %i\n", __func__, __LINE__);
 				return;
 			}
-			while (temp != NULL)
+			while (temp != NULL) {
 				Q_strncpyz(maplist3_lastmap, sizeof maplist3_lastmap, strsep(&temp, seps));
-			free(tmp);
+			}
+			gi.TagFree(tmp);
 		}
-		else
-		{
+		else {
 			gi.dprintf("WARNING: sv_maplist3 is not set.\n");
 		}
 	}
 
-	if ((count <= getMaplistSmallMax()) && (*sv_maplist->string)) {
-		s = strdup(sv_maplist->string);
+	if ((count <= getMaplistSmallMax()) && (strlen(sv_maplist->string))) {
+		s = G_CopyString(sv_maplist->string);
 		Q_strncpyz(lastmap, sizeof lastmap, maplist_lastmap);
 		lastsize = 1;
 	}
 
 	if (((count > getMaplistSmallMax()) &&
-		(count <= getMaplistMediumMax())) && *sv_maplist2->string) {
-		s = strdup(sv_maplist2->string);
+		(count <= getMaplistMediumMax())) && strlen(sv_maplist2->string)) {
+		s = G_CopyString(sv_maplist2->string);
 		Q_strncpyz(lastmap, sizeof lastmap, maplist2_lastmap);
 		lastsize = 2;
 	}
 
-	if ((count > getMaplistMediumMax()) && *sv_maplist3->string) {
-		s = strdup(sv_maplist3->string);
+	if ((count > getMaplistMediumMax()) && strlen(sv_maplist3->string)) {
+		s = G_CopyString(sv_maplist3->string);
 		Q_strncpyz(lastmap, sizeof lastmap, maplist3_lastmap);
 		lastsize = 3;
 	}
 
-	// ***** End of NH Changes *****
-	f = NULL;
 	t = strtok(s, seps);
 	while (t != NULL) {
 
@@ -408,7 +406,6 @@ void SelectNextMap(void)
 				Q_strncpyz(lastmap, sizeof lastmap, t);
 			}
 
-			// ***** Start of NH Changes *****
 			if (lastsize == 1)
 				Q_strncpyz(maplist_lastmap, sizeof maplist_lastmap, lastmap);
 			else if (lastsize == 2)
@@ -416,7 +413,7 @@ void SelectNextMap(void)
 			else if (lastsize == 3)
 				Q_strncpyz(maplist3_lastmap, sizeof maplist3_lastmap, lastmap);
 
-			free(s);
+			gi.TagFree(s);
 			return;
 		}
 		if (!f) {
@@ -424,7 +421,7 @@ void SelectNextMap(void)
 		}
 		t = strtok(NULL, seps);
 	}
-	free(s);
+	gi.TagFree(s);
 }
 
 /*

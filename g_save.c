@@ -135,7 +135,7 @@ void InitGame(void)
 {
 #ifdef	_WIN32
 	_CrtMemCheckpoint(&startup1);
-	//_crtBreakAlloc = 2845;
+	//_crtBreakAlloc = 2846;
 #endif
 
 	gi.dprintf("==== InitGame ====\n==== NightHunters %s ====\n"

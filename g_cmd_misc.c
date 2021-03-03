@@ -22,8 +22,7 @@ void Cmd_Credits_f (edict_t *ent)
 
 /*
 ==================
-Cmd_Gotomap_f
-added by majoon
+Added by majoon
 this is until we get
 some map switching in...
 ==================

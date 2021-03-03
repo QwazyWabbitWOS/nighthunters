@@ -17,7 +17,7 @@
 char* ClientTeam(edict_t* ent)
 {
 	char* p;
-	static char	value[512];
+	static char	value[512] = { 0 };
 
 	value[0] = 0;
 
@@ -917,7 +917,7 @@ void Cmd_PlayerList_f(edict_t* ent)
 {
 	int i;
 	char str[80];
-	char text[1400];
+	char text[1400] = { 0 };
 	edict_t* e2;
 
 	// connect time, ping, score, name
