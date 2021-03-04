@@ -192,45 +192,6 @@ void InfoComputer(edict_t* ent)
 
 
 /*
-===================
-onPlayerConnect
-majoon: this is just for
-random messages and such
-that might be nice to put
-in when somone first connects.
-===================
-*/
-void onPlayerConnect(edict_t* newplayer)
-{
-	FILE* motd_file;
-	char motd[500] = { 0 };
-	char line[80] = { 0 };
-
-	motd_file = fopen("nhunters/motd.txt", "r");
-	if (motd_file)
-	{
-		// we successfully opened the file "motd.txt"
-		if (fgets(motd, sizeof motd - 1, motd_file)) {
-			// we successfully read a line from "motd.txt" into motd
-			// ... read the remaining lines now
-			while (fgets(line, sizeof line, motd_file))
-			{
-				// add each new line to motd, to create a BIG message string.
-				strncat(motd, line, sizeof motd - 1);
-			}
-			// print our message.
-			gi.centerprintf(newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n- - - - - - - - - - - - - -\n%s", NHVER, motd);
-		}
-		// be good now ! ... close the file
-		fclose(motd_file);
-	}
-	//if the file wasn't there, we just make up our own motd
-	else
-		gi.centerprintf(newplayer, "Night Hunters %s\nhttp://nhunters.gameplex.net\n", NHVER);
-	//	gi.centerprintf (newplayer, "Welcome to NightHunters beta 1.4!\nThis MOD is (c)opyright 1998 by majoon\nPlease visit:\nhttp://nhunters.gameplex.net\nto download the client-side files.\n");
-}
-
-/*
 ============
 KickRadiusDamage
 This was added to
