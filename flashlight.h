@@ -16,8 +16,7 @@ void FlashlightThink (edict_t *self);
 void SP_Flashlight (edict_t *self);
 void ClearFlashlight (edict_t *self);
 void initPredator (edict_t *ent);
-void LookforPredator (edict_t *ent);
-void onPlayerConnect (edict_t *ent);
+//QW// void LookforPredator (edict_t *ent); // Not implemented
 
 void EndDMLevel (void);
 void InfoComputer (edict_t *ent);
@@ -30,5 +29,5 @@ void KickRadiusDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 	float damage, edict_t *ignore, float radius, int knockback, int dflags, int mod);
 
 // Added by DingBat
-void StartPredator(edict_t *ent) ;
+//QW// void StartPredator(edict_t *ent) ; // Not implemented
 void playerEffects (edict_t *player);
