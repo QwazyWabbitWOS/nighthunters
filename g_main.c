@@ -53,6 +53,9 @@ cvar_t* flood_msgs;
 cvar_t* flood_persecond;
 cvar_t* flood_waitdelay;
 
+cvar_t* game_dir;		// our mod dir
+cvar_t* motdfile;		// MOTD file in game_dir
+
 cvar_t* sv_maplist;
 cvar_t* sv_maplist2; // ***** NH Change *****
 cvar_t* sv_maplist3; // ***** NH Change *****

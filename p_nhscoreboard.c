@@ -34,18 +34,15 @@ int findChasePlayerNumber(edict_t* target, int sorted[], int max) {
 void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 {
 	char    entry[1024] = { 0 };
-	char    string[1400] = { 0 };
+	char    string[MAX_MSGLEN] = { 0 };
 	int     stringlength;
 	int     i, j, k;
 	int     sorted[MAX_CLIENTS];
 	int     sortedscores[MAX_CLIENTS];
 	int     score, total;
-	//int     picnum;
-	//int     x;
 	int     y;
 	gclient_t* cl;
 	edict_t* cl_ent;
-	//char    *tag; //QW// Unused.
 
 	char status[20] = { 0 }; // Status of players.
 
@@ -98,8 +95,6 @@ void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 	for (i = 0; i < total; i++) {
 		cl = &game.clients[sorted[i]];
 		cl_ent = g_edicts + 1 + sorted[i];
-
-		//picnum = gi.imageindex("i_fixme");
 
 		// New locations for entries
 		//x = 32;
@@ -222,6 +217,3 @@ void Cmd_NHScore_f(edict_t* ent)
 	ent->client->showscores = true;
 	NHScoreboard(ent);
 }
-
-
-

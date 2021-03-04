@@ -205,6 +205,10 @@ void InitGame(void)
 	sv_maplist_small_max = gi.cvar("sv_maplist_small_max", MAPLIST_SMALL_MAX_DEFAULT, 0); // ***** NH Change *****
 	sv_maplist_medium_max = gi.cvar("sv_maplist_medium_max", MAPLIST_MEDIUM_MAX_DEFAULT, 0); // ***** NH Change *****
 
+	//QW// establish where we are for locating MoTD file.
+	game_dir = gi.cvar("game", "nhunters", CVAR_NOSET);
+	motdfile = gi.cvar("motdfile", "motd.txt", 0);
+
 	// items
 	InitItems();
 

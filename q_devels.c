@@ -25,16 +25,6 @@
 #include "q_devels.h"
 
 
-// 1. FOR_EACH_PLAYER by SumFuka
-//
-// Use this macro to quickly apply code to each player in the game
-// ! you must supply arguments of type (edict_t *) and (int) !
-// e.g. int i; edict_t *joe_bloggs;
-//      for_each_player(joe_bloggs,i) { joe_bloggs->client->pers.health = 0; }
-
-// ---=== The code is #define'd in header file qdevels.h ===---
-
-
 // 2. STUFFCMD (author unkown...)
 //
 // Use this function to send a command string to a CLIENT.

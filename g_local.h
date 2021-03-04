@@ -596,6 +596,9 @@ extern	cvar_t* flood_msgs;
 extern	cvar_t* flood_persecond;
 extern	cvar_t* flood_waitdelay;
 
+extern	cvar_t* game_dir;		// our mod dir
+extern	cvar_t* motdfile;		// MOTD file in game_dir
+
 extern	cvar_t* sv_maplist;
 extern	cvar_t* sv_maplist2; // ***** NH Change *****
 extern	cvar_t* sv_maplist3; // ***** NH Change *****

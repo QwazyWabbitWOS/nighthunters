@@ -7,7 +7,7 @@
 //
 //===========================================================================
 
-#define MOTD_TIME_DEFAULT "15"
+#define MOTD_TIME_DEFAULT "12"
 
 void ShowMOTD(edict_t* ent);
 qboolean ShowingMOTD(edict_t* ent);

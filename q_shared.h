@@ -58,6 +58,8 @@ size_t Q_strncatz(char* dst, size_t dstSize, const char* src);
 #define	MAX_QPATH			64		// max length of a quake game pathname
 #define	MAX_OSPATH			128		// max length of a filesystem pathname
 
+#define	MAX_MSGLEN			1400	// max length of a message
+
 //
 // per-level limits
 //

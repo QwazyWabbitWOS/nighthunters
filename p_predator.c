@@ -11,25 +11,13 @@
 
 int saveHand;
 
-/*
-===================
-LookforPredator
-majoon: this LOOKS to
-see if there is a predator,
-every 10 seconds.
-===================
-*/
-
 int countPlayers(edict_t* exclude) {
 
 	int count = 0;
-
 	int i = 0;
-
 	edict_t* tmp = NULL;
 
 	for (i = 1; i <= maxclients->value; i++) {
-
 		tmp = &g_edicts[i];
 
 		if ((tmp->inuse) &&
@@ -39,16 +27,13 @@ int countPlayers(edict_t* exclude) {
 				count++;
 		}
 	}
-
 	return count;
-
 }
 
 edict_t* getPlayer(int num, edict_t* exclude) {
 
 	int i = 0;
 	int found = 0;
-
 	edict_t* tmp = NULL;
 
 	for (i = 1; i <= maxclients->value; i++) {
@@ -65,9 +50,7 @@ edict_t* getPlayer(int num, edict_t* exclude) {
 				return tmp;
 		}
 	}
-
 	return NULL;
-
 }
 
 void quitPredator(edict_t* ent) {
@@ -84,7 +67,6 @@ void randomPredator(edict_t* exclude) {
 
 	int count = 0;
 	int new = 0;
-
 	edict_t* player = NULL;
 
 	count = countPlayers(exclude);
@@ -96,9 +78,7 @@ void randomPredator(edict_t* exclude) {
 		return;
 
 	new = nhrand(1, count);
-
 	player = getPlayer(new, exclude);
-
 	switchPredator(player);
 }
 
@@ -109,12 +89,8 @@ void lookForPredator(edict_t* exclude) {
 	edict_t* tmp = NULL;
 
 	for (i = 1; i <= maxclients->value; i++) {
-
 		tmp = &g_edicts[i];
-
-		if ((tmp->inuse) &&
-			(!tmp->isObserving)) {
-
+		if ((tmp->inuse) && (!tmp->isObserving)) {
 			if (tmp->isPredator)
 				return;
 		}

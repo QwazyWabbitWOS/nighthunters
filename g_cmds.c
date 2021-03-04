@@ -917,7 +917,7 @@ void Cmd_PlayerList_f(edict_t* ent)
 {
 	int i;
 	char str[80];
-	char text[1400] = { 0 };
+	char text[MAX_MSGLEN] = { 0 };
 	edict_t* e2;
 
 	// connect time, ping, score, name

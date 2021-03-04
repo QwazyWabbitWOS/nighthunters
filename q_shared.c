@@ -1062,7 +1062,7 @@ int Q_strcasecmp (char *s1, char *s2)
 	return Q_strncasecmp (s1, s2, 99999);
 }
 
-static	char	bigbuffer[0x10000]; // for Com_Sprintf
+static	char	bigbuffer[0x1000]; // for Com_Sprintf
 
 void Com_sprintf (char *dest, int size, char *fmt, ...)
 {
@@ -1083,17 +1083,9 @@ size_t Q_strncpyz(char* dst, size_t dstSize, const char* src)
 	const char* s = src;
 	size_t        decSize = dstSize;
 
-	if (!dst) {
-		DbgPrintf("NULL destination passed to %s\n", __func__);
-		return 0;
-	}
-	if (!src) {
-		DbgPrintf("NULL source passed to %s\n", __func__);
-		return 0;
-	}
-	if (dstSize < 1) {
-		DbgPrintf("Bad sized passed to %s\n", __func__);
-		return 0;
+	if (!dst || !src || dstSize < 1) {
+		DbgPrintf("Bad arguments passed to %s\n", __func__);
+		exit(EXIT_FAILURE);
 	}
 
 	while (--decSize && *s)
