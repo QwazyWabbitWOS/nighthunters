@@ -167,8 +167,10 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 {
 	char	entry[1024] = { 0 };
 	char	string[MAX_MSGLEN] = { 0 };
-	int		stringlength;
-	int		i, j, k;
+	size_t	stringlength;
+	int		i;
+	int		j;
+	int		k;
 	int		sorted[MAX_CLIENTS];
 	int		sortedscores[MAX_CLIENTS];
 	int		score, total;
@@ -230,7 +232,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		{
 			Com_sprintf (entry, sizeof(entry),
 				"xv %i yv %i picn %s ",x+32, y, tag);
-			j = strlen(entry);
+			j = (int)strlen(entry);
 			if (stringlength + j > 1024)
 				break;
 			strcpy (string + stringlength, entry);
@@ -241,7 +243,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		Com_sprintf (entry, sizeof(entry),
 			"client %i %i %i %i %i %i ",
 			x, y, sorted[i], cl->resp.score, cl->ping, (level.framenum - cl->resp.enterframe)/600);
-		j = strlen(entry);
+		j = (int)strlen(entry);
 		if (stringlength + j > 1024)
 			break;
 		strcpy (string + stringlength, entry);

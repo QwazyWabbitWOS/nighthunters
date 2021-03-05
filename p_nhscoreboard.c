@@ -35,8 +35,10 @@ void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 {
 	char    entry[1024] = { 0 };
 	char    string[MAX_MSGLEN] = { 0 };
-	int     stringlength;
-	int     i, j, k;
+	size_t  stringlength;
+	int     i;
+	int     j;
+	int     k;
 	int     sorted[MAX_CLIENTS];
 	int     sortedscores[MAX_CLIENTS];
 	int     score, total;
@@ -83,7 +85,7 @@ void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 		"#", "Player", "Score", "Ping", "Time", "Status");
 
 	// Update lengths
-	j = strlen(entry);
+	j = (int)strlen(entry);
 	if (stringlength + j > 1024)
 		gi.dprintf("Overflow problem in NHScoreboardmessage\n");
 	else {
@@ -160,7 +162,7 @@ void NHScoreboardMessage(edict_t* ent, edict_t* killer)
 
 		}
 
-		j = strlen(entry);
+		j = (int)strlen(entry);
 		if (stringlength + j > 1024)
 			break;
 		strcpy(string + stringlength, entry);

@@ -22,7 +22,7 @@ void Cmd_SpotRep_f(edict_t* ent) {
 	// Talking takes you out of safety mode.
 	clearSafetyMode(ent);
 
-	strcpy(message, "** predator seen from %l **");
+	Q_strncpyz(message, sizeof message, "** predator seen from %l **");
 
 	CTFSay_Team(ent, message);
 

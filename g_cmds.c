@@ -24,7 +24,7 @@ char* ClientTeam(edict_t* ent)
 	if (!ent->client)
 		return value;
 
-	strcpy(value, Info_ValueForKey(ent->client->pers.userinfo, "skin"));
+	Q_strncpyz(value, sizeof value, Info_ValueForKey(ent->client->pers.userinfo, "skin"));
 	p = strchr(value, '/');
 	if (!p)
 		return value;
@@ -869,7 +869,7 @@ void Cmd_Say_f(edict_t* ent, qboolean team, qboolean arg0)
 	if (strlen(text) > 150)
 		text[150] = 0;
 
-	strncat(text, "\n", sizeof text - 1);
+	Q_strncatz(text, sizeof text - 1, "\n");
 
 	if (flood_msgs->value) {
 		cl = ent->client;
@@ -879,11 +879,10 @@ void Cmd_Say_f(edict_t* ent, qboolean team, qboolean arg0)
 				(int)(cl->flood_locktill - level.time));
 			return;
 		}
-		i = cl->flood_whenhead - flood_msgs->value + 1;
+		i = (int) (cl->flood_whenhead - flood_msgs->value + 1);
 		if (i < 0)
 			i = (sizeof(cl->flood_when) / sizeof(cl->flood_when[0])) + i;
-		if (cl->flood_when[i] &&
-			level.time - cl->flood_when[i] < flood_persecond->value) {
+		if (cl->flood_when[i] && level.time - cl->flood_when[i] < flood_persecond->value) {
 			cl->flood_locktill = level.time + flood_waitdelay->value;
 			gi.cprintf(ent, PRINT_CHAT, "Flood protection:  You can't talk for %d seconds.\n",
 				(int)flood_waitdelay->value);
