@@ -24,6 +24,7 @@ _CrtMemState startup1;	// memory diagnostics
 #include "game.h"
 
 //***** NH changes *****
+#define	NHVER "2.00"	//QW// One instance to maintain.
 // Night Hunters include files
 #include "g_flare.h" // NH changes: Flares.
 #include "p_menu.h"    // NH changes: CTF-like menu.
@@ -40,7 +41,6 @@ _CrtMemState startup1;	// memory diagnostics
 #include "g_cvars.h" // Sound and light show.
 #include "p_nhscoreboard.h" // scoreboard defines etc
 #include "g_cmd_overload.h" // Overload defines etc
-#define	NHVER "2.00" //	Also set this in the p_nhmenu.c file!
 //***** NH changes *****
 
 #include "strsep.h"
