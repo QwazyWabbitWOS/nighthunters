@@ -1,4 +1,4 @@
- Night Hunters 1.51	http://www.planetquake.com/nighthunters
+ Night Hunters 2.00
 
  Credits:
 	Main team
@@ -21,11 +21,7 @@
 
 
  ----
-
- This is the source code for the Quake2 mod NightHunters 1.51
-
- A pre-compiled version can be downloaded from http://www.planetquake.com/nighthunters
-
- You MUST download the pre-compiled version to get the NightHunters PAK file which
- is REQUIRED to play NightHunters, or to run a server.
-
+QwazyWabbit
+ This is the source code for the Quake2 mod NightHunters v2.00 that fixes some bugs and modernizes the code.
+ The pre-compiled Windows version of NightHunters is included in nhunters.zip in this repository.
+ Linux server admins should build from the sources. A makefile is included.
