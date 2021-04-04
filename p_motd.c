@@ -49,7 +49,7 @@ void ShowMOTD(edict_t* ent)
 			return;
 		}
 
-		rewind(motd_file);
+		fseek(motd_file, 0, SEEK_SET);
 		while ((fgets(line, 80, motd_file)) && (i < 20)) // limit is 20 lines
 		{
 			// add each new line to motd, to create a BIG message entry.
